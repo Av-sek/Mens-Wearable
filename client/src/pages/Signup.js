@@ -2,8 +2,12 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaUserAlt, FaLock, FaIdCard } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
+import { register } from "../features/user/userActions";
 
 const Signup = () => {
+  const dispatch = useDispatch();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -12,7 +16,7 @@ const Signup = () => {
 
   const signUp = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    dispatch(register(formData));
   };
 
   const handleChange = (e) => {
