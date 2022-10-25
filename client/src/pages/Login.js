@@ -3,6 +3,9 @@ import { FaLock, FaIdCard } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { Link } from "react-router-dom";
 
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../features/user/userActions";
+
 const Login = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -10,9 +13,13 @@ const Login = () => {
     password: "",
   });
 
-  const signIn = async (e) => {
+  const dispatch = useDispatch();
+
+  const { loading, error, userInfo } = useSelector((state) => state.user);
+
+  const signInHandler = (e) => {
     e.preventDefault();
-    console.log(formData);
+    dispatch(login(formData));
   };
 
   const handleChange = (e) => {
@@ -56,7 +63,7 @@ const Login = () => {
           />
           <FaLock className="form-icon" />
         </div>
-        <button className="primary-btn" onClick={signIn}>
+        <button className="primary-btn" onClick={signInHandler}>
           Sign In
         </button>
       </form>
