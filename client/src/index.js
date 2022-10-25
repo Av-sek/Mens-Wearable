@@ -5,7 +5,7 @@ import reportWebVitals from "./reportWebVitals";
 import "./index.css";
 
 // import store and provider
-import { store } from "./store";
+import { store } from "./app/store";
 import { Provider } from "react-redux";
 
 const container = document.getElementById("root");

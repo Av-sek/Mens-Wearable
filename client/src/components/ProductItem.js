@@ -3,14 +3,13 @@ import { Link } from "react-router-dom";
 import Stars from "./Stars";
 
 const ProductItem = ({ product }) => {
-  const rating = Math.floor(product.rating);
+  const rating = Math.floor(product.rating / 20);
   return (
     <div className="product__item">
       <div
         className="product__item__pic set-bg"
         style={{
-          backgroundImage:
-            "url(" + require("../assets/img/product/product-1.jpg") + ")",
+          backgroundImage: "url(" + `${product.image}` + ")",
         }}
       >
         <span className="label">New</span>
@@ -29,7 +28,7 @@ const ProductItem = ({ product }) => {
         </ul>
       </div>
       <div className="product__item__text">
-        <h6>{product.title}</h6>
+        <h6>{product.name}</h6>
         <a href="#" className="add-cart">
           + Add To Cart
         </a>
