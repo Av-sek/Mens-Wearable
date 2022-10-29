@@ -5,7 +5,12 @@ import { login, register } from "./userActions";
 
 const initialState = {
   loading: false,
-  userInfo: {}, // for user object
+  userInfo: {
+    name: "",
+    email: "",
+    token: "",
+    role: "",
+  }, // for user object
   accessToken: null, // for storing the JWT
   refreshToken: null, // for storing the JWT
   error: null,
