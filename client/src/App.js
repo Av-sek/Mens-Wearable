@@ -1,6 +1,6 @@
-import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { BrowserRouter as Router } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 import "./App.css";
 import "./assets/css/font-awesome.min.css";
@@ -12,14 +12,15 @@ import "./assets/css/slicknav.min.css";
 import "./assets/css/style.css";
 import "./assets/css/bootstrap.min.css";
 import "./assets/js/main.js";
-
-import Home from "./pages/Home.js";
-import Shop from "./pages/Shop.js";
+import "./assets/css/adminpanel.css";
 
 import Navbar from "./components/Navbar.js";
 import Footer from "./components/Footer.js";
+import AdminNav from "./components/Admin/AdminNav";
 import ShopDetails from "./pages/ShopDetails";
 import ShoppingCart from "./pages/ShoppingCart";
+import Home from "./pages/Home.js";
+import Shop from "./pages/Shop.js";
 import Checkout from "./pages/Checkout";
 import Blogs from "./pages/Blogs";
 import BlogDetails from "./pages/BlogDetails";
@@ -27,9 +28,7 @@ import Contact from "./pages/Contact";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import BlogAdmin from "./pages/BlogAdmin";
-import AdminNav from "./components/Admin/AdminNav";
-
-import { useDispatch, useSelector } from "react-redux";
+import BlogUpload from "./pages/BlogUpload";
 
 function App() {
   const { role } = useSelector((state) => state.user.userInfo);
@@ -42,7 +41,8 @@ function App() {
       {/* <Navbar /> */}
       <Routes>
         <Route path="/blog-admin" element={<BlogAdmin />} />
-        {/* <Route path="/" element={<Home />} /> */}
+        <Route path="/blog-upload" element={<BlogUpload />} />
+        <Route path="/home" element={<Home />} />
 
         {/* <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />

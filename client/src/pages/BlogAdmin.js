@@ -1,10 +1,10 @@
 import React from "react";
 
-import styles from "../assets/css/admin.module.css";
+// import styles from "../assets/css/adminpanel.css";
 
 const BlogAdmin = () => {
   return (
-    <main>
+    <main className="admin-main">
       <div className="content">
         <div className="col-12">
           <div className="title-box">
