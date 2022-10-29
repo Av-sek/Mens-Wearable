@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import { Link } from "react-router-dom";
 import ProductItem from "../components/ProductItem";
 import Stars from "../components/Stars";
 
@@ -44,8 +45,8 @@ const ShopDetails = () => {
             <div className="row">
               <div className="col-lg-12">
                 <div className="product__details__breadcrumb">
-                  <a href="./index.html">Home</a>
-                  <a href="./shop.html">Shop</a>
+                  <Link to="/">Home</Link>
+                  <Link to="/shop">Shop</Link>
                   <span>Product Details</span>
                 </div>
               </div>

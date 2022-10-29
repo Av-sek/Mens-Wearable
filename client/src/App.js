@@ -26,13 +26,25 @@ import BlogDetails from "./pages/BlogDetails";
 import Contact from "./pages/Contact";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import BlogAdmin from "./pages/BlogAdmin";
+import AdminNav from "./components/Admin/AdminNav";
+
+import { useDispatch, useSelector } from "react-redux";
 
 function App() {
+  const { role } = useSelector((state) => state.user.userInfo);
+
+  console.log(role);
+
   return (
     <Router>
-      <Navbar />
+      <AdminNav />
+      {/* <Navbar /> */}
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/blog-admin" element={<BlogAdmin />} />
+        {/* <Route path="/" element={<Home />} /> */}
+
+        {/* <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/shop" element={<Shop />} />
@@ -43,9 +55,9 @@ function App() {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/blog-details" element={<BlogDetails />} />
+        <Route path="/blog-details" element={<BlogDetails />} /> */}
       </Routes>
-      <Footer />
+      {/* <Footer /> */}
     </Router>
   );
 }
