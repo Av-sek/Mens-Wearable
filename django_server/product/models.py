@@ -1,5 +1,6 @@
 from operator import mod
 from django.db import models
+from django.template.defaultfilters import slugify
 
 # Create your models here.
 
@@ -24,8 +25,8 @@ class Product(models.Model):
     price = models.IntegerField()
     rating = models.IntegerField()
     on_sale = models.BooleanField(default=False)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    brand_name = models.ForeignKey(Brand, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products')
+    brand = models.ForeignKey(Brand, on_delete=models.CASCADE,related_name='products')
     SIZE_CHOICES = [('S', 'Small'), ('M', 'Medium'), ('L', 'Large'), ('XL', 'Extra Large'), ('XXL', 'Extra Extra Large')]
     size = models.CharField(max_length=5, choices=SIZE_CHOICES)
     color = models.CharField(max_length=50)
@@ -33,11 +34,13 @@ class Product(models.Model):
     slug = models.SlugField()
     
     def save(self, *args, **kwargs):
-        self.slug = self.name.slugify()
+        self.slug = slugify(self.name)
         super(Product, self).save(*args, **kwargs)
     def __str__(self):
         return self.name
 
 class Image(models.Model):
-    image = models.ImageField(upload_to='products/')
+    image = models.ImageField(upload_to='products/', blank=True, null=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)    
+    def __str__(self):
+        return self.product.name
