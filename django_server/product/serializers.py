@@ -22,8 +22,8 @@ class BrandSerializer(serializers.ModelSerializer):
 
     
 class ProductSerializer(serializers.ModelSerializer):
-    category = serializers.CharField(source='category.name', read_only=True)
-    brand = serializers.CharField(source='brand.name', read_only=True)
+    category_name = serializers.PrimaryKeyRelatedField(source='category.name', read_only=True)
+    brand_name = serializers.PrimaryKeyRelatedField(source='brand.name', read_only=True)
     image_set = ImageSerializer(many=True, read_only=True)
     images = serializers.ListField(
         child = serializers.ImageField(),
@@ -39,8 +39,8 @@ class ProductSerializer(serializers.ModelSerializer):
             'price',
             'rating',
             'on_sale',
-            'category',
-            'brand',
+            'category_name',
+            'brand_name',
             'size',
             'color',
             'tags',
