@@ -18,9 +18,13 @@ body {
   position: relative;
 }
 
-main.admin-main :is(h1, h2, h3, h4, h5, h6, p),
-.admin-nav :is(h1, h2, h3, h4, h5, h6, p) {
+.title-box :is(h1, h2, h3, h4, h5, h6) {
   color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.title-box p {
+  color: var(--text-color);
 }
 
 main.admin-main .editor-column p {
@@ -820,11 +824,13 @@ button:hover {
 }
 
 .card-admin .card img {
-  height: 80px;
-  width: 80px;
-  display: block;
+  height: auto;
+  width: 100%;
   margin: 0 auto 16px;
-  border-radius: 50%;
+}
+
+.card-admin button {
+  margin-right: 8px;
 }
 
 /* Login Page */
@@ -892,6 +898,68 @@ section.login {
 .login input.form-control:focus {
   background-color: transparent;
   box-shadow: none;
+}
+
+.colors {
+  display: flex;
+  margin: 8px 0;
+}
+
+.colors .color {
+  width: 30px;
+  height: 30px;
+  margin-right: 35px;
+  cursor: pointer;
+  position: relative;
+}
+
+.colors .color::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 36px;
+  height: 36px;
+  border: 1px solid #e5e5e5;
+}
+
+.colors .color i,
+.admin-images .image i,
+.tags .tag i {
+  position: absolute;
+  right: -20px;
+  top: -1px;
+  color: #343a40;
+}
+
+.tags {
+  margin: 16px 0 8px;
+}
+
+.tags .tag {
+  display: inline-block;
+  padding: 0.375rem 0.75rem;
+  margin-bottom: 0.5rem;
+  font-size: inherit;
+  font-weight: 400;
+  color: #111;
+  border-radius: 0.25rem;
+  margin-right: 35px;
+  border: 1px solid #111;
+  position: relative;
+}
+
+.admin-images {
+  margin: 12px 0;
+  display: flex;
+}
+
+.admin-images .image {
+  width: 100px;
+  height: auto;
+  margin-right: 35px;
+  position: relative;
 }
 
 @media only screen and (max-width: 768px) {
