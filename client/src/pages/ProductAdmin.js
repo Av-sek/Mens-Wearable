@@ -44,42 +44,45 @@ const ProductAdmin = () => {
                 </form>
               </div>
 
-              <div class="card-admin">
-                <div class="row">
-                  <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
-                    <div class="card">
-                      <img src="https://thumbs.dreamstime.com/b/working-home-laptop-woman-writing-blog-female-hands-keyboard-65929526.jpg" alt="" />
-                      <p class="title">Title - Some title</p>
+              <div className="card-admin">
+                <div className="row">
+                  <div className="col-12 col-sm-6 col-lg-4 col-xl-3">
+                    <div className="card">
+                      <img
+                        src="https://thumbs.dreamstime.com/b/working-home-laptop-woman-writing-blog-female-hands-keyboard-65929526.jpg"
+                        alt=""
+                      />
+                      <p className="title">Title - Some title</p>
                       <p>Info - some info</p>
                       <p>Info - some info</p>
                       <p>Info - some info</p>
-                      <div class="buttons">
+                      <div className="buttons">
                         <button>Edit</button>
                         <button>Delete</button>
                       </div>
                     </div>
                   </div>
-                  <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
-                    <div class="card">
+                  <div className="col-12 col-sm-6 col-lg-4 col-xl-3">
+                    <div className="card">
                       <img src="img/face-1.png" alt="" />
-                      <p class="title">Title - Some title</p>
+                      <p className="title">Title - Some title</p>
                       <p>Info - some info</p>
                       <p>Info - some info</p>
                       <p>Info - some info</p>
-                      <div class="buttons">
+                      <div className="buttons">
                         <button>Edit</button>
                         <button>Delete</button>
                       </div>
                     </div>
                   </div>
-                  <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
-                    <div class="card">
+                  <div className="col-12 col-sm-6 col-lg-4 col-xl-3">
+                    <div className="card">
                       <img src="img/face-1.png" alt="" />
-                      <p class="title">Title - Some title</p>
+                      <p className="title">Title - Some title</p>
                       <p>Info - some info</p>
                       <p>Info - some info</p>
                       <p>Info - some info</p>
-                      <div class="buttons">
+                      <div className="buttons">
                         <button>Edit</button>
                         <button>Delete</button>
                       </div>
