@@ -4,7 +4,26 @@ import "react-quill/dist/quill.snow.css";
 
 const BlogUpload = () => {
   const [value, setValue] = useState("");
+  const modules = {
+    toolbar: [
+      ["bold", "italic", "underline", "strike"], // toggled buttons
+      ["blockquote", "code-block"],
+      ["bold", "italic", "underline"], // custom button values
+      [{ list: "ordered" }, { list: "bullet" }],
+      [{ script: "sub" }, { script: "super" }], // superscript/subscript
+      [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
+      [{ direction: "rtl" }], // text direction
 
+      [{ size: ["small", false, "large", "huge"] }], // custom dropdown
+      [{ header: [1, 2, 3, 4, 5, 6, false] }],
+
+      [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+      [{ font: [] }],
+      [{ align: [] }],
+      ["image", "video"],
+      ["clean"], // remove formatting button
+    ],
+  };
   return (
     <main className="admin-main">
       <div className="content">
@@ -67,7 +86,12 @@ const BlogUpload = () => {
 
                 <div className="col-12 editor-column mb-3">
                   <label>Content</label>
-                  <ReactQuill theme="snow" value={value} onChange={setValue} />
+                  <ReactQuill
+                    theme="snow"
+                    value={value}
+                    onChange={setValue}
+                    modules={modules}
+                  />
                 </div>
               </div>
               <button type="submit">Submit</button>

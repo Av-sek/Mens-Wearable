@@ -14,9 +14,9 @@ import "./assets/css/bootstrap.min.css";
 import "./assets/js/main.js";
 import "./assets/css/adminpanel.css";
 
+// User routes
 import Navbar from "./components/Navbar.js";
 import Footer from "./components/Footer.js";
-import AdminNav from "./components/Admin/AdminNav";
 import ShopDetails from "./pages/ShopDetails";
 import ShoppingCart from "./pages/ShoppingCart";
 import Home from "./pages/Home.js";
@@ -27,8 +27,13 @@ import BlogDetails from "./pages/BlogDetails";
 import Contact from "./pages/Contact";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+
+// Admin Routes
+import AdminNav from "./components/Admin/AdminNav";
 import BlogAdmin from "./pages/BlogAdmin";
 import BlogUpload from "./pages/BlogUpload";
+import ProductUpload from "./pages/ProductUpload";
+import ProductAdmin from "./pages/ProductAdmin";
 
 function App() {
   const { role } = useSelector((state) => state.user.userInfo);
@@ -40,11 +45,17 @@ function App() {
       <AdminNav />
       {/* <Navbar /> */}
       <Routes>
+        {/* Admin Routes */}
+
         <Route path="/blog-admin" element={<BlogAdmin />} />
         <Route path="/blog-upload" element={<BlogUpload />} />
-        <Route path="/home" element={<Home />} />
+        <Route path="/product-admin" element={<ProductAdmin />} />
+        <Route path="/product-upload" element={<ProductUpload />} />
 
-        {/* <Route path="/" element={<Home />} />
+        {/* User Routes */}
+
+        <Route path="/home" element={<Home />} />
+        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/shop" element={<Shop />} />
@@ -55,7 +66,7 @@ function App() {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/blog-details" element={<BlogDetails />} /> */}
+        <Route path="/blog-details" element={<BlogDetails />} />
       </Routes>
       {/* <Footer /> */}
     </Router>
