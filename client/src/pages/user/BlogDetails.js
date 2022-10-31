@@ -31,7 +31,7 @@ const BlogDetails = () => {
             <div className="col-lg-12">
               <div className="blog__details__pic">
                 <img
-                  src={require("../assets/img/blog/details/blog-details.jpg")}
+                  src={require("../../assets/img/blog/details/blog-details.jpg")}
                   alt=""
                 />
               </div>

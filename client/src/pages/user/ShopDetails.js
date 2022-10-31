@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
-import ProductItem from "../components/ProductItem";
-import Stars from "../components/Stars";
+import ProductItem from "../../components/ProductItem";
+import Stars from "../../components/Stars";
 
 const ShopDetails = () => {
   let params = useParams();

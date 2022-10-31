@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { FaUserAlt, FaLock, FaIdCard } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { register } from "../features/user/userActions";
+import { register } from "../../features/user/userActions";
 
 const Signup = () => {
   const dispatch = useDispatch();

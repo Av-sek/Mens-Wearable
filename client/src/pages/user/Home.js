@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
-import BlogItem from "../components/BlogItem";
-import BlogSection from "../components/Home/BlogSection";
+import { useSelector } from "react-redux";
+import BlogItem from "../../components/BlogItem";
+import BlogSection from "../../components/Home/BlogSection";
 
-import LandingSlider from "../components/Home/LandingSlider";
-import ProductCounter from "../components/Home/ProductCounter";
-import ProductGrid from "../components/Home/ProductGrid";
-import ProductItem from "../components/ProductItem";
+import LandingSlider from "../../components/Home/LandingSlider";
+import ProductCounter from "../../components/Home/ProductCounter";
+import ProductGrid from "../../components/Home/ProductGrid";
+import ProductItem from "../../components/ProductItem";
 
 const Home = () => {
+  const user = useSelector((state) => state.user);
+  console.log(user);
+
   const getProducts = async () => {
     const response = await fetch("http://127.0.0.1:8000/api/product/3");
     const data = await response.json();
@@ -30,7 +34,7 @@ const Home = () => {
               <div className="banner__item">
                 <div className="banner__item__pic">
                   <img
-                    src={require("../assets/img/banner/banner-1.jpg")}
+                    src={require("../../assets/img/banner/banner-1.jpg")}
                     alt=""
                   ></img>
                 </div>
@@ -44,7 +48,7 @@ const Home = () => {
               <div className="banner__item banner__item--middle">
                 <div className="banner__item__pic">
                   <img
-                    src={require("../assets/img/banner/banner-2.jpg")}
+                    src={require("../../assets/img/banner/banner-2.jpg")}
                     alt=""
                   ></img>
                 </div>
@@ -58,7 +62,7 @@ const Home = () => {
               <div className="banner__item banner__item--last">
                 <div className="banner__item__pic">
                   <img
-                    src={require("../assets/img/banner/banner-3.jpg")}
+                    src={require("../../assets/img/banner/banner-3.jpg")}
                     alt=""
                   ></img>
                 </div>
@@ -92,7 +96,7 @@ const Home = () => {
                   style={{
                     backgroundImage:
                       "url(" +
-                      require("../assets/img/instagram/instagram-1.jpg") +
+                      require("../../assets/img/instagram/instagram-1.jpg") +
                       ")",
                   }}
                 ></div>
@@ -101,7 +105,7 @@ const Home = () => {
                   style={{
                     backgroundImage:
                       "url(" +
-                      require("../assets/img/instagram/instagram-2.jpg") +
+                      require("../../assets/img/instagram/instagram-2.jpg") +
                       ")",
                   }}
                 ></div>
@@ -110,7 +114,7 @@ const Home = () => {
                   style={{
                     backgroundImage:
                       "url(" +
-                      require("../assets/img/instagram/instagram-3.jpg") +
+                      require("../../assets/img/instagram/instagram-3.jpg") +
                       ")",
                   }}
                 ></div>
@@ -119,7 +123,7 @@ const Home = () => {
                   style={{
                     backgroundImage:
                       "url(" +
-                      require("../assets/img/instagram/instagram-4.jpg") +
+                      require("../../assets/img/instagram/instagram-4.jpg") +
                       ")",
                   }}
                 ></div>
@@ -128,7 +132,7 @@ const Home = () => {
                   style={{
                     backgroundImage:
                       "url(" +
-                      require("../assets/img/instagram/instagram-5.jpg") +
+                      require("../../assets/img/instagram/instagram-5.jpg") +
                       ")",
                   }}
                 ></div>
@@ -137,7 +141,7 @@ const Home = () => {
                   style={{
                     backgroundImage:
                       "url(" +
-                      require("../assets/img/instagram/instagram-6.jpg") +
+                      require("../../assets/img/instagram/instagram-6.jpg") +
                       ")",
                   }}
                 ></div>

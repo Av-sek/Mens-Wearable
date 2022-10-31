@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Outlet } from "react-router-dom";
 import { BrowserRouter as Router } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -17,56 +17,87 @@ import "./assets/css/adminpanel.css";
 // User routes
 import Navbar from "./components/Navbar.js";
 import Footer from "./components/Footer.js";
-import ShopDetails from "./pages/ShopDetails";
-import ShoppingCart from "./pages/ShoppingCart";
-import Home from "./pages/Home.js";
-import Shop from "./pages/Shop.js";
-import Checkout from "./pages/Checkout";
-import Blogs from "./pages/Blogs";
-import BlogDetails from "./pages/BlogDetails";
-import Contact from "./pages/Contact";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
+import ShopDetails from "./pages/user/ShopDetails";
+import ShoppingCart from "./pages/user/ShoppingCart";
+import Home from "./pages/user/Home.js";
+import Shop from "./pages/user/Shop.js";
+import Checkout from "./pages/user/Checkout";
+import Blogs from "./pages/user/Blogs";
+import BlogDetails from "./pages/user/BlogDetails";
+import Contact from "./pages/user/Contact";
+import Login from "./pages/user/Login";
+import Signup from "./pages/user/Signup";
 
 // Admin Routes
 import AdminNav from "./components/Admin/AdminNav";
-import BlogAdmin from "./pages/BlogAdmin";
-import BlogUpload from "./pages/BlogUpload";
-import ProductUpload from "./pages/ProductUpload";
-import ProductAdmin from "./pages/ProductAdmin";
+import BlogAdmin from "./pages/admin/BlogAdmin";
+import BlogUpload from "./pages/admin/BlogUpload";
+import ProductUpload from "./pages/admin/ProductUpload";
+import ProductAdmin from "./pages/admin/ProductAdmin";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
-  const { role } = useSelector((state) => state.user.userInfo);
+  const user = useSelector((state) => state.user);
 
-  console.log(role);
+  console.log(user);
+
+  const AdminOutlet = () => {
+    return (
+      <>
+        <AdminNav />
+        <Outlet />
+      </>
+    );
+  };
+
+  const UserOutlet = () => {
+    return (
+      <>
+        <Navbar />
+        <Outlet />
+        <Footer />
+      </>
+    );
+  };
 
   return (
     <Router>
-      <AdminNav />
       {/* <Navbar /> */}
       <Routes>
         {/* Admin Routes */}
 
-        <Route path="/blog-admin" element={<BlogAdmin />} />
-        <Route path="/blog-upload" element={<BlogUpload />} />
-        <Route path="/product-admin" element={<ProductAdmin />} />
-        <Route path="/product-upload" element={<ProductUpload />} />
+        <Route
+          path="admin"
+          element={
+            <ProtectedRoute
+              redirectPath="/"
+              isAllowed={!!user && user.role === "admin"}
+            />
+          }
+        >
+          <Route index element={<BlogAdmin />} />
+          <Route path="blog" element={<BlogAdmin />} />
+          <Route path="blog/upload" element={<BlogUpload />} />
+          <Route path="product" element={<ProductAdmin />} />
+          <Route path="product/upload" element={<ProductUpload />} />
+        </Route>
 
         {/* User Routes */}
 
-        <Route path="/home" element={<Home />} />
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/shop" element={<Shop />} />
-        <Route path="/shop-details" element={<ShopDetails />}>
-          <Route path=":id" element={<ShopDetails />} />
+        <Route path="/" element={<UserOutlet />}>
+          <Route index element={<Home />} />
+          <Route path="shop" element={<Shop />} />
+          <Route path="shopping-cart" element={<ShoppingCart />} />
+          <Route path="shop-details" element={<ShopDetails />}>
+            <Route path=":id" element={<ShopDetails />} />
+          </Route>
+          <Route path="checkout" element={<Checkout />} />
+          <Route path="blogs" element={<Blogs />} />
+          <Route path="blog-details" element={<BlogDetails />} />
+          <Route path="contact" element={<Contact />} />
+          <Route path="login" element={<Login />} />
+          <Route path="signup" element={<Signup />} />
         </Route>
-        <Route path="/shop-cart" element={<ShoppingCart />} />
-        <Route path="/checkout" element={<Checkout />} />
-        <Route path="/blogs" element={<Blogs />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/blog-details" element={<BlogDetails />} />
       </Routes>
       {/* <Footer /> */}
     </Router>

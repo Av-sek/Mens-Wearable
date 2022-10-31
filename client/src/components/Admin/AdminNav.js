@@ -1,7 +1,12 @@
 import { useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { logout } from "../../features/user/userSlice";
 
 const AdminNav = () => {
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.user);
+
   const [position, setPosition] = useState(0);
   const [isExpanded, setIsExpanded] = useState(true);
   const activeTab = useRef(null);
@@ -41,7 +46,7 @@ const AdminNav = () => {
           <div className="active-tab" ref={activeTab}></div>
           <li className="tooltip-element">
             <Link
-              to="/blog-admin"
+              to="/admin/blog"
               className="active"
               onClick={activeTabHandler}
             >
@@ -54,7 +59,7 @@ const AdminNav = () => {
           </li>
           <li className="tooltip-element">
             <Link
-              to="/blog-upload"
+              to="/admin/blog/upload"
               className="active"
               onClick={activeTabHandler}
             >
@@ -67,7 +72,7 @@ const AdminNav = () => {
           </li>
           <li className="tooltip-element">
             <Link
-              to="/product-admin"
+              to="/admin/product"
               className="active"
               onClick={activeTabHandler}
             >
@@ -80,7 +85,7 @@ const AdminNav = () => {
           </li>
           <li className="tooltip-element">
             <Link
-              to="/product-upload"
+              to="/admin/product/upload"
               className="active"
               onClick={activeTabHandler}
             >
@@ -109,9 +114,9 @@ const AdminNav = () => {
               <h5>Admin</h5>
             </div>
           </div>
-          <a href="./login.html" className="log-out">
+          <button className="log-out" onClick={() => dispatch(logout())}>
             <i className="bx bx-log-out"></i>
-          </a>
+          </button>
         </div>
       </div>
     </nav>
