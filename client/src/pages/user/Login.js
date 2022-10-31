@@ -4,7 +4,7 @@ import { MdEmail } from "react-icons/md";
 import { Link } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../features/user/userActions";
+import { login } from "../../features/user/userActions";
 
 const Login = () => {
   const [formData, setFormData] = useState({
