@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import BlogItem from "../components/BlogItem";
+import BlogItem from "../../components/BlogItem";
 
 const Blogs = () => {
   const [blogs, setBlogs] = useState([]);
@@ -24,7 +24,7 @@ const Blogs = () => {
         className="breadcrumb-blog set-bg"
         style={{
           backgroundImage:
-            "url(" + require("../assets/img/breadcrumb-bg.jpg") + ")",
+            "url(" + require("../../assets/img/breadcrumb-bg.jpg") + ")",
         }}
       >
         <div className="container">

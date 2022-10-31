@@ -5,12 +5,9 @@ import { login, register } from "./userActions";
 
 const initialState = {
   loading: false,
-  userInfo: {
-    name: "",
-    email: "",
-    token: "",
-    role: "admin",
-  }, // for user object
+  name: "",
+  email: "",
+  role: "admin",
   accessToken: null, // for storing the JWT
   refreshToken: null, // for storing the JWT
   error: null,
@@ -19,7 +16,15 @@ const initialState = {
 const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    logout: (state) => {
+      state.accessToken = null;
+      state.refreshToken = null;
+      state.role = "something";
+      state.name = "";
+      state.email = "";
+    },
+  },
   extraReducers: {
     // login
     [login.pending]: (state, action) => {
@@ -48,5 +53,7 @@ const userSlice = createSlice({
     },
   },
 });
+
+export const { logout } = userSlice.actions;
 
 export const userReducer = userSlice.reducer;

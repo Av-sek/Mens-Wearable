@@ -17,28 +17,29 @@ import "./assets/css/adminpanel.css";
 // User routes
 import Navbar from "./components/Navbar.js";
 import Footer from "./components/Footer.js";
-import ShopDetails from "./pages/ShopDetails";
-import ShoppingCart from "./pages/ShoppingCart";
-import Home from "./pages/Home.js";
-import Shop from "./pages/Shop.js";
-import Checkout from "./pages/Checkout";
-import Blogs from "./pages/Blogs";
-import BlogDetails from "./pages/BlogDetails";
-import Contact from "./pages/Contact";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
+import ShopDetails from "./pages/user/ShopDetails";
+import ShoppingCart from "./pages/user/ShoppingCart";
+import Home from "./pages/user/Home.js";
+import Shop from "./pages/user/Shop.js";
+import Checkout from "./pages/user/Checkout";
+import Blogs from "./pages/user/Blogs";
+import BlogDetails from "./pages/user/BlogDetails";
+import Contact from "./pages/user/Contact";
+import Login from "./pages/user/Login";
+import Signup from "./pages/user/Signup";
 
 // Admin Routes
 import AdminNav from "./components/Admin/AdminNav";
-import BlogAdmin from "./pages/BlogAdmin";
-import BlogUpload from "./pages/BlogUpload";
-import ProductUpload from "./pages/ProductUpload";
-import ProductAdmin from "./pages/ProductAdmin";
+import BlogAdmin from "./pages/admin/BlogAdmin";
+import BlogUpload from "./pages/admin/BlogUpload";
+import ProductUpload from "./pages/admin/ProductUpload";
+import ProductAdmin from "./pages/admin/ProductAdmin";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
-  const { role } = useSelector((state) => state.user.userInfo);
+  const user = useSelector((state) => state.user);
 
-  console.log(role);
+  console.log(user);
 
   const AdminOutlet = () => {
     return (
@@ -65,7 +66,15 @@ function App() {
       <Routes>
         {/* Admin Routes */}
 
-        <Route path="admin" element={<AdminOutlet />}>
+        <Route
+          path="admin"
+          element={
+            <ProtectedRoute
+              redirectPath="/"
+              isAllowed={!!user && user.role === "admin"}
+            />
+          }
+        >
           <Route index element={<BlogAdmin />} />
           <Route path="blog" element={<BlogAdmin />} />
           <Route path="blog/upload" element={<BlogUpload />} />
