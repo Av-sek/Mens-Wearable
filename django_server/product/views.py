@@ -19,4 +19,5 @@ class ProductSearchView(generics.ListAPIView):
     queryset = Product.objects.all()
     filter_backends = [DjangoFilterBackend,filters.SearchFilter]
     search_fields = ['name','tags']
-    filterset_fields = ['category', 'brand_name', 'size', 'color']
+    filterset_fields = ['category', 'brand', 'size', 'color']
+    

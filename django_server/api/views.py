@@ -3,26 +3,28 @@ from rest_framework import generics
 from .serializers import *
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework_simplejwt.tokens import RefreshToken
 
 from django.contrib.auth import authenticate
 # Create your views here.
-class UserCreate(generics.CreateAPIView):
-    authentication_classes = ()
-    permission_classes = ()
-    serializer_class = UserSerializer
-    
-
-class LoginView(APIView):
-    permission_classes = ()
-    
+class UserCreate(APIView):
     def post(self,request):
-        username = request.data.get("username")
-        password = request.data.get("password")
-        user = authenticate(username=username,password=password)
-        if user:
-            return Response({"token":user.auth_token.key})
-        else:
-            return Response({"error":"Wrong Credentials"},status=400)
+        serializers = UserSerializer(data=request.data)
+        if not serializers.is_valid():
+            return Response(serializers.errors)
+        serializers.save()
         
+        user = User.objects.get(username = serializers.data['username'])
+        refresh = RefreshToken.for_user(user)
+        
+        return Response({
+            'status': 200,
+            'payload': serializers.data,
+            'refresh': str(refresh),
+            'access': str(refresh.access_token),
+        }
+        )
+
+
     
     
