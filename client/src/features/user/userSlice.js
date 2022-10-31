@@ -9,7 +9,7 @@ const initialState = {
     name: "",
     email: "",
     token: "",
-    role: "",
+    role: "admin",
   }, // for user object
   accessToken: null, // for storing the JWT
   refreshToken: null, // for storing the JWT

@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Outlet } from "react-router-dom";
 import { BrowserRouter as Router } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -40,33 +40,55 @@ function App() {
 
   console.log(role);
 
+  const AdminOutlet = () => {
+    return (
+      <>
+        <AdminNav />
+        <Outlet />
+      </>
+    );
+  };
+
+  const UserOutlet = () => {
+    return (
+      <>
+        <Navbar />
+        <Outlet />
+        <Footer />
+      </>
+    );
+  };
+
   return (
     <Router>
-      <AdminNav />
       {/* <Navbar /> */}
       <Routes>
         {/* Admin Routes */}
 
-        <Route path="/blog-admin" element={<BlogAdmin />} />
-        <Route path="/blog-upload" element={<BlogUpload />} />
-        <Route path="/product-admin" element={<ProductAdmin />} />
-        <Route path="/product-upload" element={<ProductUpload />} />
+        <Route path="admin" element={<AdminOutlet />}>
+          <Route index element={<BlogAdmin />} />
+          <Route path="blog" element={<BlogAdmin />} />
+          <Route path="blog/upload" element={<BlogUpload />} />
+          <Route path="product" element={<ProductAdmin />} />
+          <Route path="product/upload" element={<ProductUpload />} />
+        </Route>
 
         {/* User Routes */}
 
-        <Route path="/home" element={<Home />} />
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/shop" element={<Shop />} />
-        <Route path="/shop-details" element={<ShopDetails />}>
-          <Route path=":id" element={<ShopDetails />} />
+        <Route path="/" element={<UserOutlet />}>
+          <Route index element={<Home />} />
+          <Route path="shop" element={<Shop />} />
+          <Route path="shopping-cart" element={<ShoppingCart />} />
+          <Route path="shop-details" element={<ShopDetails />}>
+            <Route path=":id" element={<ShopDetails />} />
+          </Route>
+          <Route path="checkout" element={<Checkout />} />
+          <Route path="blogs" element={<Blogs />} />
+          <Route path="blog-details" element={<BlogDetails />} />
+          <Route path="contact" element={<Contact />} />
+          <Route path="login" element={<Login />} />
+          <Route path="signup" element={<Signup />} />
         </Route>
-        <Route path="/shop-cart" element={<ShoppingCart />} />
-        <Route path="/checkout" element={<Checkout />} />
-        <Route path="/blogs" element={<Blogs />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/blog-details" element={<BlogDetails />} />
       </Routes>
       {/* <Footer /> */}
     </Router>

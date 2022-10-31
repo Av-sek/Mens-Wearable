@@ -41,7 +41,7 @@ const AdminNav = () => {
           <div className="active-tab" ref={activeTab}></div>
           <li className="tooltip-element">
             <Link
-              to="/blog-admin"
+              to="/admin/blog"
               className="active"
               onClick={activeTabHandler}
             >
@@ -54,7 +54,7 @@ const AdminNav = () => {
           </li>
           <li className="tooltip-element">
             <Link
-              to="/blog-upload"
+              to="/admin/blog/upload"
               className="active"
               onClick={activeTabHandler}
             >
@@ -67,7 +67,7 @@ const AdminNav = () => {
           </li>
           <li className="tooltip-element">
             <Link
-              to="/product-admin"
+              to="/admin/product"
               className="active"
               onClick={activeTabHandler}
             >
@@ -80,7 +80,7 @@ const AdminNav = () => {
           </li>
           <li className="tooltip-element">
             <Link
-              to="/product-upload"
+              to="/admin/product/upload"
               className="active"
               onClick={activeTabHandler}
             >
