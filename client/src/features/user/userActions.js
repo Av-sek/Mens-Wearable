@@ -3,7 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 export const login = createAsyncThunk(
   "user/login",
   async (payload, thunkAPI) => {
-    const response = await fetch("/api/users/login", {
+    const response = await fetch("/api/users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -22,7 +22,7 @@ export const login = createAsyncThunk(
 export const register = createAsyncThunk(
   "user/register",
   async (payload, thunkAPI) => {
-    const response = await fetch("/api/users/register", {
+    const response = await fetch("/api/users/create/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
