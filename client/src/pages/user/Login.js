@@ -8,7 +8,6 @@ import { login } from "../../features/user/userActions";
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    name: "",
     email: "",
     password: "",
   });
@@ -19,7 +18,10 @@ const Login = () => {
 
   const signInHandler = (e) => {
     e.preventDefault();
-    dispatch(login(formData));
+    let formVal = new FormData();
+    formVal.append("email", formData.email);
+    formVal.append("password", formData.password);
+    dispatch(login(formVal));
   };
 
   const handleChange = (e) => {

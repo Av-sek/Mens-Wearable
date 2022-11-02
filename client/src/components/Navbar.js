@@ -19,8 +19,8 @@ const Navbar = () => {
       <div className="offcanvas-menu-wrapper">
         <div className="offcanvas__option">
           <div className="offcanvas__links">
-            <a href="#">Sign in</a>
-            <a href="#">FAQs</a>
+            <a href="/login">Sign in</a>
+            <a href="/signup">Sign up</a>
           </div>
           <div className="offcanvas__top__hover">
             <span>
@@ -66,8 +66,8 @@ const Navbar = () => {
               <div className="col-lg-6 col-md-5">
                 <div className="header__top__right">
                   <div className="header__top__links">
-                    <a href="#">Sign in</a>
-                    <a href="#">FAQs</a>
+                    <a href="/login">Sign in</a>
+                    <a href="/signup">Sign up</a>
                   </div>
                   <div className="header__top__hover">
                     <span>

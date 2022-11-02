@@ -9,14 +9,18 @@ const Signup = () => {
   const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
-    name: "",
+    username: "",
     email: "",
     password: "",
   });
 
   const signUp = async (e) => {
     e.preventDefault();
-    dispatch(register(formData));
+    let formVal = new FormData();
+    formVal.append("username", formData.username);
+    formVal.append("email", formData.email);
+    formVal.append("password", formData.password);
+    dispatch(register(formVal));
   };
 
   const handleChange = (e) => {
@@ -36,11 +40,10 @@ const Signup = () => {
           <label htmlFor="email"> Name </label>
           <input
             type="text"
-            name="name"
+            name="username"
             className="form-control"
-            id="name"
+            id="username"
             required
-            value={formData.name}
             onChange={handleChange}
             placeholder="Enter your name"
           />
@@ -54,7 +57,6 @@ const Signup = () => {
             className="form-control"
             id="email"
             required
-            value={formData.email}
             onChange={handleChange}
             placeholder="Enter your email"
           />
@@ -69,7 +71,6 @@ const Signup = () => {
             className="form-control"
             id="password"
             onChange={handleChange}
-            value={formData.password}
             placeholder="Enter your password"
           />
           <FaLock className="form-icon" />
