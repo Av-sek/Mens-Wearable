@@ -27,8 +27,7 @@ class Product(models.Model):
     on_sale = models.BooleanField(default=False)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products')
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE,related_name='products')
-    SIZE_CHOICES = [('S', 'Small'), ('M', 'Medium'), ('L', 'Large'), ('XL', 'Extra Large'), ('XXL', 'Extra Extra Large')]
-    size = models.CharField(max_length=5, choices=SIZE_CHOICES)
+    size = models.CharField(max_length=5)
     color = models.CharField(max_length=50)
     tags = models.CharField(max_length=100)
     slug = models.SlugField()

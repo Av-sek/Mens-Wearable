@@ -1,5 +1,5 @@
 venv
 *.pyc
 */media/*
-django_server/db.sqlite3
+
 *.sqlite3
