@@ -1,7 +1,13 @@
 from rest_framework import serializers
-
+from .models import ShoppingCart
 
 
 
 class ShoppingCartSeralizer(serializers.ModelSerializer):
-    pass
+    class Meta:
+        model = ShoppingCart
+        fields = [
+            'id',
+            'product',
+            'quantity',
+            ]
