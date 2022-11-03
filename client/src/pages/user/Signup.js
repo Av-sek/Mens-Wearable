@@ -10,7 +10,7 @@ const Signup = () => {
 
   const [formData, setFormData] = useState({
     username: "",
-    email: "",
+    // email: "",
     password: "",
   });
 
@@ -18,9 +18,9 @@ const Signup = () => {
     e.preventDefault();
     let formVal = new FormData();
     formVal.append("username", formData.username);
-    formVal.append("email", formData.email);
+    // formVal.append("email", formData.email);
     formVal.append("password", formData.password);
-    dispatch(register(formVal));
+    dispatch(register(formData));
   };
 
   const handleChange = (e) => {
@@ -49,7 +49,7 @@ const Signup = () => {
           />
           <FaUserAlt className="form-icon" />
         </div>
-        <div className="form-group">
+        {/* <div className="form-group">
           <label htmlFor="email"> Email </label>
           <input
             type="email"
@@ -61,7 +61,7 @@ const Signup = () => {
             placeholder="Enter your email"
           />
           <MdEmail className="form-icon" />
-        </div>
+        </div> */}
         <div className="form-group">
           <label htmlFor="password"> Password </label>
           <input

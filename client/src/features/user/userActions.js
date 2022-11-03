@@ -3,7 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 export const login = createAsyncThunk(
   "user/login",
   async (payload, thunkAPI) => {
-    const response = await fetch("/api/users", {
+    const response = await fetch("http://127.0.0.1:8000/api/users/token", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -11,6 +11,7 @@ export const login = createAsyncThunk(
       body: JSON.stringify(payload),
     });
     const data = await response.json();
+    console.log("login data");
     if (response.ok) {
       return data;
     } else {
@@ -22,7 +23,7 @@ export const login = createAsyncThunk(
 export const register = createAsyncThunk(
   "user/register",
   async (payload, thunkAPI) => {
-    const response = await fetch("/api/users/create/", {
+    const response = await fetch("http://127.0.0.1:8000/api/users/create", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
