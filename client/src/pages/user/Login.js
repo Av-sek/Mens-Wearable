@@ -8,7 +8,7 @@ import { login } from "../../features/user/userActions";
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    email: "",
+    username: "",
     password: "",
   });
 
@@ -18,10 +18,10 @@ const Login = () => {
 
   const signInHandler = (e) => {
     e.preventDefault();
-    let formVal = new FormData();
-    formVal.append("email", formData.email);
-    formVal.append("password", formData.password);
-    dispatch(login(formVal));
+    // let formVal = new FormData();
+    // formVal.append("email", formData.email);
+    // formVal.append("password", formData.password);
+    dispatch(login(formData));
   };
 
   const handleChange = (e) => {
@@ -38,14 +38,13 @@ const Login = () => {
       </div>
       <form action="#">
         <div className="form-group">
-          <label htmlFor="email"> Email </label>
+          <label htmlFor="email"> Username </label>
           <input
-            type="email"
-            name="email"
+            type="text"
+            name="username"
             className="form-control"
             id="email"
             required
-            value={formData.email}
             onChange={handleChange}
             placeholder="Enter your email"
           />
@@ -60,7 +59,6 @@ const Login = () => {
             className="form-control"
             id="password"
             onChange={handleChange}
-            value={formData.password}
             placeholder="Enter your password"
           />
           <FaLock className="form-icon" />
