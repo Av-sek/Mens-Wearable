@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { FaUserAlt, FaLock, FaIdCard } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,12 +14,10 @@ const Signup = () => {
     password: "",
   });
 
+  const { loading, error, userInfo } = useSelector((state) => state.user);
+
   const signUp = async (e) => {
     e.preventDefault();
-    let formVal = new FormData();
-    formVal.append("username", formData.username);
-    // formVal.append("email", formData.email);
-    formVal.append("password", formData.password);
     dispatch(register(formData));
   };
 
@@ -27,7 +25,9 @@ const Signup = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  return (
+  return userInfo !== null ? (
+    <Navigate to="/shop" replace />
+  ) : (
     <div className="form-container">
       <div className="form-title">
         <p>Sign Up now </p>
