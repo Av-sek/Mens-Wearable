@@ -2,7 +2,7 @@ from dataclasses import field
 from operator import mod
 from django.contrib.auth.models import User
 from rest_framework import serializers
-
+from django.core import validators
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
