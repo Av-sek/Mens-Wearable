@@ -39,6 +39,8 @@ class ProductSerializer(serializers.ModelSerializer):
             'price',
             'rating',
             'on_sale',
+            'category',
+            'brand',
             'category_name',
             'brand_name',
             'size',

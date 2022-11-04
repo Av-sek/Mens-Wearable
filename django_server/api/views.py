@@ -9,6 +9,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 class UserCreate(APIView):
     authentication_classes = []
     permission_classes = [permissions.AllowAny]
+    
     def post(self,request):
         serializers = UserSerializer(data=request.data)
         if not serializers.is_valid():

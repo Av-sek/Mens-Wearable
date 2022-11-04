@@ -14,15 +14,34 @@ class ShoppingCartView(APIView):
     authentication_classes = [JWTAuthentication,SessionAuthentication]
     permission_classes = [IsAuthenticated]
     
-    def get(self, request):
-        print(request.user)
-        cart = ShoppingCart.objects.filter(user=request.user)
+    def get(self,request):
+        cart = ShoppingCart.objects.filter(user=self.request.user)
+        print(cart)
         serializer = ShoppingCartSeralizer(cart, many=True)
         return Response(serializer.data)
     
-    def post(self, request):
-        serializer = ShoppingCartSeralizer(data=request.data)
+    def post(self,request):
+        serializer = ShoppingCartSeralizer(data=self.request.data,)
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(user=self.request.user)
             return Response(serializer.data)
         return Response(serializer.errors)
+
+class ShoppingCartRetrieveDestroyView(APIView):
+    authentication_classes = [JWTAuthentication,SessionAuthentication]
+    permission_classes = [IsAuthenticated]
+    def get(self,request,id):
+        try:
+            cart = ShoppingCart.objects.get(id=id,user=self.request.user)
+        except:
+            return Response({"status":404,"message":"Not Found"})
+        serializer = ShoppingCartSeralizer(cart)
+        return Response(serializer.data)
+    def delete(self,request,id):
+        try:
+            cart = ShoppingCart.objects.get(id=id,user=self.request.user)
+        except:
+            return Response({"status":404,"message":"Not Found"})
+        cart.delete()
+        return Response("Deleted")
+    
