@@ -39,8 +39,6 @@ import ProtectedRoute from "./components/ProtectedRoute";
 function App() {
   const user = useSelector((state) => state.user);
 
-  console.log(user);
-
   const AdminOutlet = () => {
     return (
       <>
@@ -87,7 +85,7 @@ function App() {
         <Route path="/" element={<UserOutlet />}>
           <Route index element={<Home />} />
           <Route path="shop" element={<Shop />} />
-          <Route path="shopping-cart" element={<ShoppingCart />} />
+          <Route path="shop-cart" element={<ShoppingCart />} />
           <Route path="shop-details" element={<ShopDetails />}>
             <Route path=":id" element={<ShopDetails />} />
           </Route>

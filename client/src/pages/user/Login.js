@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaLock, FaIdCard } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../features/user/userActions";
@@ -16,6 +16,8 @@ const Login = () => {
 
   const { loading, error, userInfo } = useSelector((state) => state.user);
 
+  console.log(userInfo);
+
   const signInHandler = (e) => {
     e.preventDefault();
     // let formVal = new FormData();
@@ -28,7 +30,9 @@ const Login = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  return (
+  return userInfo !== null ? (
+    <Navigate to="/shop" replace />
+  ) : (
     <div className="form-container">
       <div className="form-title">
         <p>Sign In now </p>

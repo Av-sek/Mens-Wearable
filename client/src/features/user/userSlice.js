@@ -3,13 +3,17 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import { login, register } from "./userActions";
 
+const accessToken = localStorage.getItem("accessToken")
+  ? localStorage.getItem("accessToken")
+  : null;
+const refreshToken = localStorage.getItem("refreshToken")
+  ? localStorage.getItem("refreshToken")
+  : null;
+
 const initialState = {
   loading: false,
-  name: "",
-  email: "",
-  role: "admin",
-  accessToken: null, // for storing the JWT
-  refreshToken: null, // for storing the JWT
+  userInfo: null,
+  accessToken: accessToken,
   error: null,
 };
 
@@ -18,11 +22,9 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     logout: (state) => {
+      state.userInfo = null;
       state.accessToken = null;
-      state.refreshToken = null;
-      state.role = "something";
-      state.name = "";
-      state.email = "";
+      localStorage.removeItem("accessToken");
     },
   },
   extraReducers: {
@@ -31,11 +33,14 @@ const userSlice = createSlice({
       console.log("pending");
     },
     [login.fulfilled]: (state, action) => {
-      console.log(action.payload);
-      state.accessToken = action.payload.accessToken;
-      state.refreshToken = action.payload.refreshToken;
-      state.role = "user";
-      state.name = action.payload.username;
+      state.userInfo = {
+        name: "sth",
+        email: "sth@gmail.com",
+        accessToken: action.payload.access,
+        refreshToken: action.payload.refresh,
+        role: "user",
+      };
+      state.accessToken = action.payload.access;
       console.log("fulfilled");
     },
     [login.rejected]: (state, action) => {

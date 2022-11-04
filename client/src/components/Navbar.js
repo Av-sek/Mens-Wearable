@@ -1,6 +1,14 @@
 import React from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
+import { logout } from "../features/user/userSlice";
+
 const Navbar = () => {
+  const dispatch = useDispatch();
+
+  const { loading, error, userInfo } = useSelector((state) => state.user);
+
   //assigning location variable
   const location = useLocation();
 
@@ -66,8 +74,9 @@ const Navbar = () => {
               <div className="col-lg-6 col-md-5">
                 <div className="header__top__right">
                   <div className="header__top__links">
-                    <a href="/login">Sign in</a>
-                    <a href="/signup">Sign up</a>
+                    {userInfo === null && <Link to="/login">Sign in</Link>}
+                    {userInfo === null && <Link to="/signup">Sign up</Link>}
+                    <button onClick={() => dispatch(logout())}>Logout</button>
                   </div>
                   <div className="header__top__hover">
                     <span>
