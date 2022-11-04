@@ -5,7 +5,6 @@ from rest_framework import serializers
 from django.core import validators
 
 class UserSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True, required=True, validators=[validators.MinLengthValidator(8)])
     class Meta:
         model = User
         fields=['username','email','password']
