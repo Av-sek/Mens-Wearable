@@ -1,8 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Stars from "./Stars";
+import { useDispatch, useSelector } from "react-redux";
+import { addCartItems } from "../features/cart/cartActions";
 
 const ProductItem = ({ product }) => {
+  const dispatch = useDispatch();
+
   const rating = Math.floor(product.rating / 20);
   return (
     <div className="product__item">
@@ -29,7 +33,11 @@ const ProductItem = ({ product }) => {
       </div>
       <div className="product__item__text">
         <h6>{product.name}</h6>
-        <a href="#" className="add-cart">
+        <a
+          href="#/"
+          className="add-cart"
+          onClick={() => dispatch(addCartItems(product))}
+        >
           + Add To Cart
         </a>
         <div className="rating">

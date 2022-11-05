@@ -76,7 +76,9 @@ const Navbar = () => {
                   <div className="header__top__links">
                     {userInfo === null && <Link to="/login">Sign in</Link>}
                     {userInfo === null && <Link to="/signup">Sign up</Link>}
-                    <button onClick={() => dispatch(logout())}>Logout</button>
+                    {userInfo !== null && (
+                      <button onClick={() => dispatch(logout())}>Logout</button>
+                    )}
                   </div>
                   <div className="header__top__hover">
                     <span>

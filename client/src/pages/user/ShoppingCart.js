@@ -1,8 +1,22 @@
-import React from "react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import CartItem from "../../components/CartItem";
 
 const ShoppingCart = () => {
+  const getCartItems = async () => {
+    const response = await fetch("http://127.0.0.1:8000/api/shopping_cart/", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    const data = await response.json();
+    console.log(data);
+  };
+
+  useEffect(() => {}, []);
+
   return (
     <>
       {/* <!-- Breadcrumb Section Begin --> */}
