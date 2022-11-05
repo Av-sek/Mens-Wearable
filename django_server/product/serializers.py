@@ -27,7 +27,8 @@ class ProductSerializer(serializers.ModelSerializer):
     image_set = ImageSerializer(many=True, read_only=True)
     images = serializers.ListField(
         child = serializers.ImageField(),
-        write_only = True
+        write_only = True,
+        required = False
         )
     class Meta:
         model = Product
