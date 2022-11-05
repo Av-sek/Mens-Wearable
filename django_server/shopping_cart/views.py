@@ -30,13 +30,16 @@ class ShoppingCartView(APIView):
 class ShoppingCartRetrieveDestroyView(APIView):
     authentication_classes = [JWTAuthentication,SessionAuthentication]
     permission_classes = [IsAuthenticated]
-    def get(self,request,id):
+    def put(self,request,id):
         try:
             cart = ShoppingCart.objects.get(id=id,user=self.request.user)
         except:
             return Response({"status":404,"message":"Not Found"})
-        serializer = ShoppingCartSeralizer(cart)
-        return Response(serializer.data)
+        serializer = ShoppingCartSeralizer(cart,data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors)
     def delete(self,request,id):
         try:
             cart = ShoppingCart.objects.get(id=id,user=self.request.user)
