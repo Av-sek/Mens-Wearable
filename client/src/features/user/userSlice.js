@@ -15,6 +15,7 @@ const initialState = {
   userInfo: null,
   accessToken: accessToken,
   error: null,
+  role: "admin",
 };
 
 const userSlice = createSlice({

@@ -3,19 +3,14 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 export const addCartItems = createAsyncThunk(
   "cart/addCartItems",
   async (product) => {
-    const response = await fetch("http://localhost:3000/cart", {
+    const response = await fetch("http://127.0.0.1:8000/api/shopping_cart/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
       body: JSON.stringify({
-        userId: 1,
-        products: [
-          {
-            id: product.id,
-            quantity: 1,
-          },
-        ],
+        product: product.id,
       }),
     });
     const data = await response.json();

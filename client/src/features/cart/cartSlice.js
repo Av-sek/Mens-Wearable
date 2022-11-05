@@ -21,6 +21,17 @@ const cartSlice = createSlice({
     [increaseCart.fulfilled]: (state, action) => {
       console.log(action.payload);
     },
+    [addCartItems.pending]: (state, action) => {
+      console.log("pending");
+    },
+    [addCartItems.fulfilled]: (state, action) => {
+      console.log(action.payload);
+      console.log("fulfilled");
+    },
+    [addCartItems.rejected]: (state, action) => {
+      console.log("rejected");
+      console.log(action.payload);
+    },
   },
 });
 
