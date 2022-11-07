@@ -10,10 +10,6 @@ const Navbar = () => {
   const { loading, error, userInfo } = useSelector((state) => state.user);
 
   const { totalPrice, cartItems } = useSelector((state) => state.cart);
-
-  console.log("navbar check");
-  console.log("totalPrice " + totalPrice);
-
   //assigning location variable
   const location = useLocation();
 

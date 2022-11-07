@@ -58,7 +58,7 @@ const ShoppingCart = () => {
                       <CartItem
                         key={item.id}
                         item={item.product_data}
-                        product={item}
+                        cart={item}
                         itemQuantity={item.quantity}
                       />
                     ))}

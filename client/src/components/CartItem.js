@@ -9,17 +9,19 @@ import {
   deleteCart,
 } from "../features/cart/cartSlice";
 
-const CartItem = ({ item, itemQuantity, product }) => {
+const CartItem = ({ item, itemQuantity, cart }) => {
   const [quantity, setQuantity] = useState(itemQuantity);
   const dispatch = useDispatch();
 
   const increaseQuantity = async () => {
-    await dispatch(increaseCart({ id: product.id, quantity: quantity }));
+    await dispatch(
+      increaseCart({ id: item.id, quantity: quantity, cartId: cart.id })
+    );
     setQuantity(quantity + 1);
   };
 
   const decreaseQuantity = async () => {
-    await dispatch(decreaseCart({ id: product.id, quantity: quantity }));
+    await dispatch(decreaseCart({ id: item.id, quantity: quantity }));
     setQuantity(quantity - 1);
   };
 
