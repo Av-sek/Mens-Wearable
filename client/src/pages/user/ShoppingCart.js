@@ -1,25 +1,20 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import CartItem from "../../components/CartItem";
+import { useDispatch, useSelector } from "react-redux";
+import { getCartItems } from "../../features/cart/cartActions";
 
 const ShoppingCart = () => {
   const [cart, setCart] = useState([]);
 
-  const getCartItems = async () => {
-    const response = await fetch("http://127.0.0.1:8000/api/shopping_cart/", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-    });
-    const data = await response.json();
-    console.log(data);
-    setCart(data);
-  };
+  const dispatch = useDispatch();
+
+  const { cartItems } = useSelector((state) => state.cart);
+
+  console.log(cartItems);
 
   useEffect(() => {
-    getCartItems();
+    dispatch(getCartItems());
   }, []);
 
   return (
@@ -59,10 +54,11 @@ const ShoppingCart = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {cart.map((item) => (
+                    {cartItems.map((item) => (
                       <CartItem
                         key={item.id}
                         item={item.product_data}
+                        product={item}
                         itemQuantity={item.quantity}
                       />
                     ))}

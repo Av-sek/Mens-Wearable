@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -9,6 +9,11 @@ const Navbar = () => {
 
   const { loading, error, userInfo } = useSelector((state) => state.user);
 
+  const { totalPrice, cartItems } = useSelector((state) => state.cart);
+
+  console.log("navbar check");
+  console.log("totalPrice " + totalPrice);
+
   //assigning location variable
   const location = useLocation();
 
@@ -18,7 +23,10 @@ const Navbar = () => {
   //Javascript split method to get the name of the path in array
   const splitLocation = pathname.split("/");
 
-  console.log(splitLocation);
+  useEffect(() => {
+    console.log("navbar useEffect");
+    console.log("totalPrice " + totalPrice);
+  }, [cartItems]);
 
   return (
     <>
@@ -178,7 +186,7 @@ const Navbar = () => {
                   ></img>{" "}
                   <span>0</span>
                 </Link>
-                <div className="price">$0.00</div>
+                <div className="price">${totalPrice}</div>
               </div>
             </div>
           </div>
