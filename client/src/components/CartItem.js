@@ -3,20 +3,29 @@ import { useDispatch } from "react-redux";
 
 import { GrSubtract, GrAdd } from "react-icons/gr";
 
-import { increaseCart, decreaseCart } from "../features/cart/cartSlice";
+import {
+  increaseCart,
+  decreaseCart,
+  deleteCart,
+} from "../features/cart/cartSlice";
 
-const CartItem = () => {
-  const [quantity, setQuantity] = useState(1);
+const CartItem = ({ item, itemQuantity, product }) => {
+  const [quantity, setQuantity] = useState(itemQuantity);
   const dispatch = useDispatch();
 
-  const increaseQuantity = () => {
+  const increaseQuantity = async () => {
+    await dispatch(increaseCart({ id: product.id, quantity: quantity }));
     setQuantity(quantity + 1);
-    dispatch(increaseCart(1));
   };
 
-  const decreaseQuantity = () => {
+  const decreaseQuantity = async () => {
+    await dispatch(decreaseCart({ id: product.id, quantity: quantity }));
     setQuantity(quantity - 1);
-    dispatch(decreaseCart(1));
+  };
+
+  const removeItem = async () => {
+    console.log("remove");
+    await dispatch(deleteCart(item.id));
   };
 
   return (
@@ -26,8 +35,8 @@ const CartItem = () => {
           <img src="img/shopping-cart/cart-2.jpg" alt="" />
         </div>
         <div className="product__cart__item__text">
-          <h6>Diagonal Textured Cap</h6>
-          <h5>$98.49</h5>
+          <h6>{item.name}</h6>
+          <h5>${item.price}</h5>
         </div>
       </td>
       <td className="quantity__item">
@@ -46,8 +55,8 @@ const CartItem = () => {
           </div>
         </div>
       </td>
-      <td className="cart__price">$ 32.50</td>
-      <td className="cart__close">
+      <td className="cart__price">$ {item.price * quantity}</td>
+      <td className="cart__close" onClick={() => removeItem()}>
         <i className="fa fa-close"></i>
       </td>
     </tr>

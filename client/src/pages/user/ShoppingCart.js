@@ -1,21 +1,21 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import CartItem from "../../components/CartItem";
+import { useDispatch, useSelector } from "react-redux";
+import { getCartItems } from "../../features/cart/cartActions";
 
 const ShoppingCart = () => {
-  const getCartItems = async () => {
-    const response = await fetch("http://127.0.0.1:8000/api/shopping_cart/", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
-    const data = await response.json();
-    console.log(data);
-  };
+  const [cart, setCart] = useState([]);
 
-  useEffect(() => {}, []);
+  const dispatch = useDispatch();
+
+  const { cartItems } = useSelector((state) => state.cart);
+
+  console.log(cartItems);
+
+  useEffect(() => {
+    dispatch(getCartItems());
+  }, []);
 
   return (
     <>
@@ -54,9 +54,14 @@ const ShoppingCart = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    <CartItem />
-                    <CartItem />
-                    <CartItem />
+                    {cartItems.map((item) => (
+                      <CartItem
+                        key={item.id}
+                        item={item.product_data}
+                        product={item}
+                        itemQuantity={item.quantity}
+                      />
+                    ))}
                   </tbody>
                 </table>
               </div>

@@ -1,5 +1,17 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
+export const getCartItems = createAsyncThunk("cart/getCartItems", async () => {
+  const response = await fetch("http://127.0.0.1:8000/api/shopping_cart/", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    },
+  });
+  const data = await response.json();
+  return data;
+});
+
 export const addCartItems = createAsyncThunk(
   "cart/addCartItems",
   async (product) => {
@@ -20,44 +32,58 @@ export const addCartItems = createAsyncThunk(
 
 export const increaseCart = createAsyncThunk(
   "cart/increaseCart",
-  async (id) => {
-    const response = await fetch(`https://dummyjson.com/carts/${id}`, {
+  async ({ id, quantity }, _) => {
+    console.log(id);
+    const response = await fetch(`http://127.0.0.1:8000/api/shopping_cart/id`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
       body: JSON.stringify({
-        products: [
-          {
-            id: id,
-            quantity: 4,
-          },
-        ],
+        product: id,
+        quantity: ++quantity,
       }),
     });
+    const data = await response.json();
+    return data;
   }
 );
 
 export const decreaseCart = createAsyncThunk(
   "cart/decreaseCart",
-  async (id) => {
-    const response = await fetch(`https://dummyjson.com/carts/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        products: [
-          {
-            id: id,
-            quantity: 4,
-          },
-        ],
-      }),
-    });
-
+  async ({ id, quantity }, _) => {
+    const response = await fetch(
+      `http://127.0.0.1:8000/api/shopping_cart/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+        body: JSON.stringify({
+          product: id,
+          quantity: --quantity,
+        }),
+      }
+    );
     const data = await response.json();
-    console.log(data);
     return data;
   }
 );
+
+export const deleteCart = createAsyncThunk("cart/deleteCart", async (id, _) => {
+  console.log(id);
+  const response = await fetch(
+    `http://127.0.0.1:8000/api/shopping_cart/${id}`,
+    {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    }
+  );
+  const data = await response.json();
+  return data;
+});

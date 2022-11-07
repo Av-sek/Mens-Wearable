@@ -80,6 +80,19 @@ const ProductUpload = () => {
     setImageUrls(newImages);
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const product = {
+      name: e.target.name.value,
+      price: e.target.price.value,
+      description: description,
+      colors: colors,
+      tags: tags,
+      images: imageUrls,
+    };
+    console.log(product);
+  };
+
   return (
     <main className="admin-main">
       <div className="content">
