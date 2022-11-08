@@ -17,3 +17,6 @@ class ShoppingCartSeralizer(serializers.ModelSerializer):
             'product_data',
             'quantity',
             ]
+        extra_kwargs = {
+            'product': {'write_only': True},
+        }
