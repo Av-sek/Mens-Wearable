@@ -23,7 +23,6 @@ const Navbar = () => {
 
   useEffect(() => {
     console.log("navbar useEffect");
-    console.log("totalPrice " + totalPrice);
   }, [cartItems]);
 
   return (
@@ -80,9 +79,9 @@ const Navbar = () => {
               <div className="col-lg-6 col-md-5">
                 <div className="header__top__right">
                   <div className="header__top__links">
-                    {accesstoken === null && <Link to="/login">Sign in</Link>}
-                    {accesstoken === null && <Link to="/signup">Sign up</Link>}
-                    {accesstoken !== null && (
+                    {userInfo === null && <Link to="/login">Sign in</Link>}
+                    {userInfo === null && <Link to="/signup">Sign up</Link>}
+                    {userInfo !== null && (
                       <button onClick={() => dispatch(logout())}>Logout</button>
                     )}
                   </div>

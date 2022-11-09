@@ -5,17 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCartItems } from "../../features/cart/cartActions";
 
 const ShoppingCart = () => {
-  const [cart, setCart] = useState([]);
+  const { cartItems, totalPrice } = useSelector((state) => state.cart);
 
   const dispatch = useDispatch();
 
-  const { cartItems } = useSelector((state) => state.cart);
-
-  console.log(cartItems);
-
   useEffect(() => {
     dispatch(getCartItems());
-  }, []);
+    console.log("useEffect running on cart");
+  }, [cartItems.length]);
 
   return (
     <>
@@ -54,14 +51,10 @@ const ShoppingCart = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {cartItems.map((item) => (
-                      <CartItem
-                        key={item.id}
-                        item={item.product_data}
-                        cart={item}
-                        itemQuantity={item.quantity}
-                      />
-                    ))}
+                    {cartItems.length > 0 &&
+                      cartItems.map((item) => (
+                        <CartItem key={item.id} cart={item} />
+                      ))}
                   </tbody>
                 </table>
               </div>
@@ -92,10 +85,10 @@ const ShoppingCart = () => {
                 <h6>Cart total</h6>
                 <ul>
                   <li>
-                    Subtotal <span>$ 169.50</span>
+                    Subtotal <span>$ {totalPrice}</span>
                   </li>
                   <li>
-                    Total <span>$ 169.50</span>
+                    Total <span>$ {totalPrice}</span>
                   </li>
                 </ul>
                 <a href="#" className="primary-btn">

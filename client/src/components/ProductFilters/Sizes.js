@@ -19,12 +19,10 @@ const Sizes = () => {
     <div className="shop__sidebar__size">
       {sizes.map((size) => {
         return (
-          <>
-            <label htmlFor="xs">
-              {size.name}
-              <input type="radio" id="xs" />
-            </label>
-          </>
+          <label htmlFor="xs" key={size.id}>
+            {size.name}
+            <input type="radio" id="xs" />
+          </label>
         );
       })}
     </div>

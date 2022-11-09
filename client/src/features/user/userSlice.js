@@ -10,14 +10,12 @@ const refreshToken = localStorage.getItem("refreshToken")
   ? localStorage.getItem("refreshToken")
   : null;
 
-const role = localStorage.getItem("role") ? localStorage.getItem("role") : null;
-
 const initialState = {
   loading: false,
   userInfo: null,
   accessToken: accessToken,
   error: null,
-  role: role,
+  role: "",
 };
 
 const userSlice = createSlice({

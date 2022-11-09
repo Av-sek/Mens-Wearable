@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, current } from "@reduxjs/toolkit";
 
 import {
   getCartItems,
@@ -21,6 +21,16 @@ const getTotal = (cartItems) => {
   return total;
 };
 
+const getNewCart = ({ cartItems, newItem }) => {
+  const tempItems = cartItems.map((item) => {
+    if (item.id === newItem.id) {
+      item = newItem;
+    }
+    return item;
+  });
+  return tempItems;
+};
+
 const cartSlice = createSlice({
   name: "cart",
   initialState,
@@ -41,11 +51,6 @@ const cartSlice = createSlice({
       console.log("fulfilled get products");
       state.cartItems = action.payload;
       state.totalPrice = getTotal(state.cartItems);
-      // let itemsTotal = 0;
-      // tempItems.forEach((item) => {
-      //   itemsTotal += item.quantity * item.product_data.price;
-      // });
-      // state.totalPrice = itemsTotal;
     },
     [getCartItems.rejected]: (state, action) => {
       console.log("rejeted get products");
@@ -72,13 +77,7 @@ const cartSlice = createSlice({
     },
     [increaseCart.fulfilled]: (state, action) => {
       const newItem = action.payload;
-      const tempItems = state.cartItems.map((item) => {
-        if (item.id === newItem.id) {
-          item = newItem;
-        }
-        return item;
-      });
-      state.cartItems = tempItems;
+      state.cartItems = getNewCart({ cartItems: state.cartItems, newItem });
       state.totalPrice = getTotal(state.cartItems);
     },
     [increaseCart.rejected]: (state, action) => {
@@ -92,7 +91,9 @@ const cartSlice = createSlice({
       console.log("pending decrease");
     },
     [decreaseCart.fulfilled]: (state, action) => {
-      console.log(action.payload);
+      const newItem = action.payload;
+      state.cartItems = getNewCart({ cartItems: state.cartItems, newItem });
+      state.totalPrice = getTotal(state.cartItems);
       console.log("fulfilled decrease");
     },
     [decreaseCart.rejected]: (state, action) => {
@@ -106,7 +107,13 @@ const cartSlice = createSlice({
       console.log("pending delete");
     },
     [deleteCart.fulfilled]: (state, action) => {
-      console.log(action.payload);
+      const deletedId = action.payload;
+      console.log("previous cart items");
+      const tempItems = state.cartItems.filter((item) => {
+        return item.id !== deletedId;
+      });
+      state.cartItems = tempItems;
+      state.totalPrice = getTotal(state.cartItems);
       console.log("fulfilled delete");
     },
     [deleteCart.rejected]: (state, action) => {
