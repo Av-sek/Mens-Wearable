@@ -4,6 +4,12 @@ from rest_framework import permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+    TokenVerifyView
+)
+from .serializers import CustomTokenObtainPairSerializer
 
 # Create your views here.
 class UserCreate(APIView):
@@ -27,6 +33,7 @@ class UserCreate(APIView):
         }
         )
 
-
+class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer
     
     

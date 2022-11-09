@@ -9,7 +9,7 @@ from .serializers import *
 class ProductViewSets(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    permission_classes = permissions.IsAuthenticatedOrReadOnly,
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,permissions.IsAdminUser)
     authentication_classes = [
         authentication.SessionAuthentication,
         JWTAuthentication,

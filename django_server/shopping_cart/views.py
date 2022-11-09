@@ -21,7 +21,7 @@ class ShoppingCartView(APIView):
         return Response(serializer.data)
     
     def post(self,request):
-        serializer = ShoppingCartSeralizer(data=self.request.data,)
+        serializer = ShoppingCartSeralizer(data=request.data,)
         if serializer.is_valid():
             serializer.save(user=self.request.user)
             return Response(serializer.data)
@@ -35,7 +35,10 @@ class ShoppingCartRetrieveDestroyView(APIView):
             cart = ShoppingCart.objects.get(id=id,user=self.request.user)
         except:
             return Response({"status":404,"message":"Not Found"})
-        serializer = ShoppingCartSeralizer(cart,data=request.data)
+        request.POST._mutable = True
+        request.data['product'] = cart.product.id
+        request.POST._mutable = False
+        serializer = ShoppingCartSeralizer(cart,data=request.data,)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
