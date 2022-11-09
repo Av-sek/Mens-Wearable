@@ -13,6 +13,8 @@ const Navbar = () => {
   //assigning location variable
   const location = useLocation();
 
+  const accesstoken = localStorage.getItem("accesstoken");
+
   //destructuring pathname from location
   const { pathname } = location;
 
@@ -78,9 +80,9 @@ const Navbar = () => {
               <div className="col-lg-6 col-md-5">
                 <div className="header__top__right">
                   <div className="header__top__links">
-                    {userInfo === null && <Link to="/login">Sign in</Link>}
-                    {userInfo === null && <Link to="/signup">Sign up</Link>}
-                    {userInfo !== null && (
+                    {accesstoken === null && <Link to="/login">Sign in</Link>}
+                    {accesstoken === null && <Link to="/signup">Sign up</Link>}
+                    {accesstoken !== null && (
                       <button onClick={() => dispatch(logout())}>Logout</button>
                     )}
                   </div>
