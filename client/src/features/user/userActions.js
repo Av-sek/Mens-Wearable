@@ -14,6 +14,7 @@ export const login = createAsyncThunk(
     if (response.ok) {
       localStorage.setItem("accessToken", data.access);
       localStorage.setItem("refreshToken", data.refresh);
+      localStorage.setItem("role", "admin");
       return data;
     } else {
       return thunkAPI.rejectWithValue(data);

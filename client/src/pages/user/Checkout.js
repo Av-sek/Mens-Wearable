@@ -1,18 +1,30 @@
-import React from "react";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getCartItems } from "../../features/cart/cartActions";
+import { useEffect } from "react";
 
 const Checkout = () => {
+  const { cartItems, totalPrice } = useSelector((state) => state.cart);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getCartItems());
+    console.log("useEffect running on checkout");
+  }, [cartItems.length]);
+
   return (
     <>
       {/* <!-- Breadcrumb Section Begin --> */}
-      <section class="breadcrumb-option">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-12">
-              <div class="breadcrumb__text">
+      <section className="breadcrumb-option">
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-12">
+              <div className="breadcrumb__text">
                 <h4>Check Out</h4>
-                <div class="breadcrumb__links">
-                  <a href="./index.html">Home</a>
-                  <a href="./shop.html">Shop</a>
+                <div className="breadcrumb__links">
+                  <Link to="/">Home</Link>
+                  <Link to="/shop">Shop</Link>
                   <span>Check Out</span>
                 </div>
               </div>
@@ -23,28 +35,28 @@ const Checkout = () => {
       {/* <!-- Breadcrumb Section End --> */}
 
       {/* <!-- Checkout Section Begin --> */}
-      <section class="checkout spad">
-        <div class="container">
-          <div class="checkout__form">
+      <section className="checkout spad">
+        <div className="container">
+          <div className="checkout__form">
             <form action="#">
-              <div class="row">
-                <div class="col-lg-8 col-md-6">
-                  <h6 class="coupon__code">
-                    <span class="icon_tag_alt"></span> Have a coupon?{" "}
+              <div className="row">
+                <div className="col-lg-8 col-md-6">
+                  <h6 className="coupon__code">
+                    <span className="icon_tag_alt"></span> Have a coupon?{" "}
                     <a href="#">Click here</a> to enter your code
                   </h6>
-                  <h6 class="checkout__title">Billing Details</h6>
-                  <div class="row">
-                    <div class="col-lg-6">
-                      <div class="checkout__input">
+                  <h6 className="checkout__title">Billing Details</h6>
+                  <div className="row">
+                    <div className="col-lg-6">
+                      <div className="checkout__input">
                         <p>
                           Fist Name<span>*</span>
                         </p>
                         <input type="text" />
                       </div>
                     </div>
-                    <div class="col-lg-6">
-                      <div class="checkout__input">
+                    <div className="col-lg-6">
+                      <div className="checkout__input">
                         <p>
                           Last Name<span>*</span>
                         </p>
@@ -52,55 +64,55 @@ const Checkout = () => {
                       </div>
                     </div>
                   </div>
-                  <div class="checkout__input">
+                  <div className="checkout__input">
                     <p>
                       Country<span>*</span>
                     </p>
                     <input type="text" />
                   </div>
-                  <div class="checkout__input">
+                  <div className="checkout__input">
                     <p>
                       Address<span>*</span>
                     </p>
                     <input
                       type="text"
                       placeholder="Street Address"
-                      class="checkout__input__add"
+                      className="checkout__input__add"
                     />
                     <input
                       type="text"
                       placeholder="Apartment, suite, unite ect (optinal)"
                     />
                   </div>
-                  <div class="checkout__input">
+                  <div className="checkout__input">
                     <p>
                       Town/City<span>*</span>
                     </p>
                     <input type="text" />
                   </div>
-                  <div class="checkout__input">
+                  <div className="checkout__input">
                     <p>
                       Country/State<span>*</span>
                     </p>
                     <input type="text" />
                   </div>
-                  <div class="checkout__input">
+                  <div className="checkout__input">
                     <p>
                       Postcode / ZIP<span>*</span>
                     </p>
                     <input type="text" />
                   </div>
-                  <div class="row">
-                    <div class="col-lg-6">
-                      <div class="checkout__input">
+                  <div className="row">
+                    <div className="col-lg-6">
+                      <div className="checkout__input">
                         <p>
                           Phone<span>*</span>
                         </p>
                         <input type="text" />
                       </div>
                     </div>
-                    <div class="col-lg-6">
-                      <div class="checkout__input">
+                    <div className="col-lg-6">
+                      <div className="checkout__input">
                         <p>
                           Email<span>*</span>
                         </p>
@@ -108,11 +120,11 @@ const Checkout = () => {
                       </div>
                     </div>
                   </div>
-                  <div class="checkout__input__checkbox">
-                    <label for="acc">
+                  <div className="checkout__input__checkbox">
+                    <label htmlFor="acc">
                       Create an account?
                       <input type="checkbox" id="acc" />
-                      <span class="checkmark"></span>
+                      <span className="checkmark"></span>
                     </label>
                     <p>
                       Create an account by entering the information below. If
@@ -120,20 +132,20 @@ const Checkout = () => {
                       the page
                     </p>
                   </div>
-                  <div class="checkout__input">
+                  <div className="checkout__input">
                     <p>
                       Account Password<span>*</span>
                     </p>
                     <input type="text" />
                   </div>
-                  <div class="checkout__input__checkbox">
-                    <label for="diff-acc">
+                  <div className="checkout__input__checkbox">
+                    <label htmlFor="diff-acc">
                       Note about your order, e.g, special noe for delivery
                       <input type="checkbox" id="diff-acc" />
-                      <span class="checkmark"></span>
+                      <span className="checkmark"></span>
                     </label>
                   </div>
-                  <div class="checkout__input">
+                  <div className="checkout__input">
                     <p>
                       Order notes<span>*</span>
                     </p>
@@ -143,39 +155,36 @@ const Checkout = () => {
                     />
                   </div>
                 </div>
-                <div class="col-lg-4 col-md-6">
-                  <div class="checkout__order">
-                    <h4 class="order__title">Your order</h4>
-                    <div class="checkout__order__products">
+                <div className="col-lg-4 col-md-6">
+                  <div className="checkout__order">
+                    <h4 className="order__title">Your order</h4>
+                    <div className="checkout__order__products">
                       Product <span>Total</span>
                     </div>
-                    <ul class="checkout__total__products">
+                    <ul className="checkout__total__products">
+                      {cartItems.length > 0 &&
+                        cartItems.map((item, index) => (
+                          <li key={item.id}>
+                            {index + 1}. {item.product_data.name}{" "}
+                            <span>
+                              ${item.product_data.price * item.quantity}
+                            </span>
+                          </li>
+                        ))}
+                    </ul>
+                    <ul className="checkout__total__all">
                       <li>
-                        01. Vanilla salted caramel <span>$ 300.0</span>
+                        Subtotal <span>${totalPrice}</span>
                       </li>
                       <li>
-                        02. German chocolate <span>$ 170.0</span>
-                      </li>
-                      <li>
-                        03. Sweet autumn <span>$ 170.0</span>
-                      </li>
-                      <li>
-                        04. Cluten free mini dozen <span>$ 110.0</span>
+                        Total <span>${totalPrice}</span>
                       </li>
                     </ul>
-                    <ul class="checkout__total__all">
-                      <li>
-                        Subtotal <span>$750.99</span>
-                      </li>
-                      <li>
-                        Total <span>$750.99</span>
-                      </li>
-                    </ul>
-                    <div class="checkout__input__checkbox">
-                      <label for="acc-or">
+                    <div className="checkout__input__checkbox">
+                      <label htmlFor="acc-or">
                         Create an account?
                         <input type="checkbox" id="acc-or" />
-                        <span class="checkmark"></span>
+                        <span className="checkmark"></span>
                       </label>
                     </div>
                     <p>
@@ -183,21 +192,21 @@ const Checkout = () => {
                       eiusmod tempor incididunt ut labore et dolore magna
                       aliqua.
                     </p>
-                    <div class="checkout__input__checkbox">
-                      <label for="payment">
+                    <div className="checkout__input__checkbox">
+                      <label htmlFor="payment">
                         Check Payment
                         <input type="checkbox" id="payment" />
-                        <span class="checkmark"></span>
+                        <span className="checkmark"></span>
                       </label>
                     </div>
-                    <div class="checkout__input__checkbox">
-                      <label for="paypal">
+                    <div className="checkout__input__checkbox">
+                      <label htmlFor="paypal">
                         Paypal
                         <input type="checkbox" id="paypal" />
-                        <span class="checkmark"></span>
+                        <span className="checkmark"></span>
                       </label>
                     </div>
-                    <button type="submit" class="site-btn">
+                    <button type="submit" className="site-btn">
                       PLACE ORDER
                     </button>
                   </div>

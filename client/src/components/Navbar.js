@@ -10,12 +10,10 @@ const Navbar = () => {
   const { loading, error, userInfo } = useSelector((state) => state.user);
 
   const { totalPrice, cartItems } = useSelector((state) => state.cart);
-
-  console.log("navbar check");
-  console.log("totalPrice " + totalPrice);
-
   //assigning location variable
   const location = useLocation();
+
+  const accesstoken = localStorage.getItem("accesstoken");
 
   //destructuring pathname from location
   const { pathname } = location;
@@ -25,7 +23,6 @@ const Navbar = () => {
 
   useEffect(() => {
     console.log("navbar useEffect");
-    console.log("totalPrice " + totalPrice);
   }, [cartItems]);
 
   return (

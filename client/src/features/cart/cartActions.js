@@ -34,17 +34,19 @@ export const increaseCart = createAsyncThunk(
   "cart/increaseCart",
   async ({ id, quantity }, _) => {
     console.log(id);
-    const response = await fetch(`http://127.0.0.1:8000/api/shopping_cart/id`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-      body: JSON.stringify({
-        product: id,
-        quantity: ++quantity,
-      }),
-    });
+    const response = await fetch(
+      `http://127.0.0.1:8000/api/shopping_cart/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+        body: JSON.stringify({
+          quantity: ++quantity,
+        }),
+      }
+    );
     const data = await response.json();
     return data;
   }
@@ -62,7 +64,6 @@ export const decreaseCart = createAsyncThunk(
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
         body: JSON.stringify({
-          product: id,
           quantity: --quantity,
         }),
       }
@@ -85,5 +86,7 @@ export const deleteCart = createAsyncThunk("cart/deleteCart", async (id, _) => {
     }
   );
   const data = await response.json();
-  return data;
+  console.log("function deleteCart");
+  console.log(data);
+  return id;
 });

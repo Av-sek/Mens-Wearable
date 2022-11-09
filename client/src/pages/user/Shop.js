@@ -11,11 +11,11 @@ const Shop = () => {
       method: "GET",
       headers: {
         accept: "application/json",
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
     });
     const data = await result.json();
     setProducts(data);
-    console.log(data);
   };
 
   useEffect(() => {
