@@ -16,7 +16,6 @@ class ShoppingCartView(APIView):
     
     def get(self,request):
         cart = ShoppingCart.objects.filter(user=self.request.user)
-        print(cart)
         serializer = ShoppingCartSeralizer(cart, many=True)
         return Response(serializer.data)
     
