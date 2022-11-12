@@ -22,6 +22,7 @@ class CategoryViewSets(viewsets.ModelViewSet):
     serializer_class = CategorySerializer
     permission_classes = (IsAdminOrReadOnly,)
     authentication_classes = [
+        authentication.SessionAuthentication,
         JWTAuthentication,
         ]
     
@@ -29,6 +30,7 @@ class BrandViewSets(viewsets.ModelViewSet):
     queryset = Brand.objects.all()
     serializer_class = BrandSerializer
     authentication_classes = [
+        authentication.SessionAuthentication,
         JWTAuthentication,
         ]
     permission_classes = (IsAdminOrReadOnly,)
@@ -36,7 +38,25 @@ class ImageViewSets(viewsets.ModelViewSet):
     queryset = Image.objects.all()
     serializer_class = ImageSerializer
     authentication_classes = [
+        authentication.SessionAuthentication,
         JWTAuthentication,
         ]
     permission_classes = (IsAdminOrReadOnly,)
-    
+
+class SizeViewSets(viewsets.ModelViewSet):
+    queryset = Size.objects.all()
+    serializer_class = SizeSerializer
+    authentication_classes = [
+        authentication.SessionAuthentication,
+        JWTAuthentication,
+        ]
+    permission_classes = (IsAdminOrReadOnly,)
+
+class TagsViewSets(viewsets.ModelViewSet):
+    queryset = Tags.objects.all()
+    serializer_class = TagSerializer
+    authentication_classes = [
+        authentication.SessionAuthentication,
+        JWTAuthentication,
+        ]
+    permission_classes = (IsAdminOrReadOnly,)

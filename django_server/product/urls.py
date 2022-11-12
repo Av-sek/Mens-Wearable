@@ -10,6 +10,8 @@ router.register('product', ProductViewSets)
 router.register('product_category', CategoryViewSets)
 router.register('brand', BrandViewSets)
 router.register('image', ImageViewSets)
+router.register('size', SizeViewSets)
+router.register('tags', TagsViewSets)
 
 
 urlpatterns = [
