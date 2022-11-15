@@ -48,6 +48,7 @@ const CartItem = ({ cart }) => {
             <GrSubtract className="qtybtn" onClick={() => decreaseQuantity()} />
             <input
               type="number"
+              readOnly
               className="cart-quantity"
               value={cart.quantity}
             />
