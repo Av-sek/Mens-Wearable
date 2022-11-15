@@ -11,7 +11,6 @@ const Shop = () => {
       method: "GET",
       headers: {
         accept: "application/json",
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
     });
     const data = await result.json();
@@ -70,16 +69,17 @@ const Shop = () => {
                 </div>
               </div>
               <div className="row">
-                {products.map((product) => {
-                  return (
-                    <div
-                      className="col-lg-4 col-md-6 col-sm-6"
-                      key={product.id}
-                    >
-                      <ProductItem product={product} />
-                    </div>
-                  );
-                })}
+                {products.length > 0 &&
+                  products.map((product) => {
+                    return (
+                      <div
+                        className="col-lg-4 col-md-6 col-sm-6"
+                        key={product.id}
+                      >
+                        <ProductItem product={product} />
+                      </div>
+                    );
+                  })}
               </div>
               <div className="row">
                 <div className="col-lg-12">
