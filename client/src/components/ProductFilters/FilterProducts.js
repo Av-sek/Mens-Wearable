@@ -5,7 +5,7 @@ import Price from "./Price";
 import Sizes from "./Sizes";
 import Tags from "./Tags";
 
-const FilterProducts = () => {
+const FilterProducts = ({ filterProducts }) => {
   return (
     <div className="shop__sidebar">
       <div className="shop__sidebar__search">
@@ -30,7 +30,7 @@ const FilterProducts = () => {
               data-parent="#accordionExample"
             >
               <div className="card-body">
-                <Categories />
+                <Categories filterProducts={filterProducts} />
               </div>
             </div>
           </div>
@@ -46,7 +46,7 @@ const FilterProducts = () => {
               data-parent="#accordionExample"
             >
               <div className="card-body">
-                <Brands />
+                <Brands filterProducts={filterProducts} />
               </div>
             </div>
           </div>
@@ -62,7 +62,7 @@ const FilterProducts = () => {
               data-parent="#accordionExample"
             >
               <div className="card-body">
-                <Price />
+                <Price filterProducts={filterProducts} />
               </div>
             </div>
           </div>
@@ -78,7 +78,7 @@ const FilterProducts = () => {
               data-parent="#accordionExample"
             >
               <div className="card-body">
-                <Sizes />
+                <Sizes filterProducts={filterProducts} />
               </div>
             </div>
           </div>
@@ -94,7 +94,7 @@ const FilterProducts = () => {
               data-parent="#accordionExample"
             >
               <div className="card-body">
-                <Tags />
+                <Tags filterProducts={filterProducts} />
               </div>
             </div>
           </div>
