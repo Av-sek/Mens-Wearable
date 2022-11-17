@@ -4,16 +4,18 @@ import Stars from "./Stars";
 import { useDispatch, useSelector } from "react-redux";
 import { addCartItems } from "../features/cart/cartActions";
 
+import { motion } from "framer-motion";
+
 const ProductItem = ({ product }) => {
   const dispatch = useDispatch();
 
   const rating = Math.floor(product.rating / 20);
   return (
-    <div className="product__item">
+    <motion.div layout="true" className="product__item">
       <div
         className="product__item__pic set-bg"
         style={{
-          backgroundImage: "url(" + `${product.image}` + ")",
+          backgroundImage: "url(" + `${product.thumbnail}` + ")",
         }}
       >
         <span className="label">New</span>
@@ -56,7 +58,7 @@ const ProductItem = ({ product }) => {
           </label>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
