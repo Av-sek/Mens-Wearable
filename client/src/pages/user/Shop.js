@@ -10,23 +10,30 @@ import { useSearchParams } from "react-router-dom";
 
 const Shop = () => {
   const [products, setProducts] = useState([]);
+  // const [filterOptions, setFilterOptions] = useState({
+  //   category: {
+  //     id: "",
+  //     label: "",
+  //   },
+  //   size: {
+  //     id: "",
+  //     label: "",
+  //   },
+  //   tags: {
+  //     id: "",
+  //     label: "",
+  //   },
+  //   brand: {
+  //     id: "",
+  //     label: "",
+  //   },
+  // });
+
   const [filterOptions, setFilterOptions] = useState({
-    category: {
-      id: "",
-      label: "",
-    },
-    size: {
-      id: "",
-      label: "",
-    },
-    tags: {
-      id: "",
-      label: "",
-    },
-    brand: {
-      id: "",
-      label: "",
-    },
+    category: "",
+    size: "",
+    tags: "",
+    brand: "",
   });
 
   const [search, setSearch] = useSearchParams();

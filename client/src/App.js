@@ -39,15 +39,6 @@ import ProtectedRoute from "./components/ProtectedRoute";
 function App() {
   const user = useSelector((state) => state.user);
 
-  const AdminOutlet = () => {
-    return (
-      <>
-        <AdminNav />
-        <Outlet />
-      </>
-    );
-  };
-
   const UserOutlet = () => {
     return (
       <>
@@ -87,7 +78,17 @@ function App() {
           <Route path="shop" element={<Shop />}>
             <Route path="*" element={<Shop />} />
           </Route>
-          <Route path="shop-cart" element={<ShoppingCart />} />
+          <Route
+            path="shop-cart"
+            element={
+              <ProtectedRoute
+                redirectPath="/"
+                isAllowed={!!user && user.role === "admin"}
+              />
+            }
+          >
+            <Route path="" element={<ShoppingCart />} />
+          </Route>
           <Route path="shop-details" element={<ShopDetails />}>
             <Route path=":id" element={<ShopDetails />} />
           </Route>
