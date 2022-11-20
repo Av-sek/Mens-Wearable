@@ -5,7 +5,7 @@ import Price from "./Price";
 import Sizes from "./Sizes";
 import Tags from "./Tags";
 
-const FilterProducts = ({ filterProducts }) => {
+const FilterProducts = ({ handleFilters }) => {
   return (
     <div className="shop__sidebar">
       <div className="shop__sidebar__search">
@@ -30,7 +30,7 @@ const FilterProducts = ({ filterProducts }) => {
               data-parent="#accordionExample"
             >
               <div className="card-body">
-                <Categories filterProducts={filterProducts} />
+                <Categories handleFilters={handleFilters} />
               </div>
             </div>
           </div>
@@ -46,7 +46,7 @@ const FilterProducts = ({ filterProducts }) => {
               data-parent="#accordionExample"
             >
               <div className="card-body">
-                <Brands filterProducts={filterProducts} />
+                <Brands handleFilters={handleFilters} />
               </div>
             </div>
           </div>
@@ -62,7 +62,7 @@ const FilterProducts = ({ filterProducts }) => {
               data-parent="#accordionExample"
             >
               <div className="card-body">
-                <Price filterProducts={filterProducts} />
+                <Price handleFilters={handleFilters} />
               </div>
             </div>
           </div>
@@ -78,7 +78,7 @@ const FilterProducts = ({ filterProducts }) => {
               data-parent="#accordionExample"
             >
               <div className="card-body">
-                <Sizes filterProducts={filterProducts} />
+                <Sizes handleFilters={handleFilters} />
               </div>
             </div>
           </div>
@@ -94,7 +94,7 @@ const FilterProducts = ({ filterProducts }) => {
               data-parent="#accordionExample"
             >
               <div className="card-body">
-                <Tags filterProducts={filterProducts} />
+                <Tags handleFilters={handleFilters} />
               </div>
             </div>
           </div>

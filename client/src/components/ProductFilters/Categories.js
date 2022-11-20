@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const Categories = ({ filterProducts }) => {
+const Categories = ({ handleFilters }) => {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
 
@@ -17,18 +17,18 @@ const Categories = ({ filterProducts }) => {
   }, []);
 
   // filter products by size
-  const filterCategory = (id) => {
-    // set selected size null if already selected
-    if (id === selectedCategory) {
-      setSelectedCategory(null);
-      filterProducts({ brand: null });
-    }
-    // set selected size and filter products
-    else {
-      setSelectedCategory(id);
-      filterProducts({ brand: id });
-    }
-  };
+  // const filterCategory = (id) => {
+  //   // set selected size null if already selected
+  //   if (id === selectedCategory) {
+  //     setSelectedCategory(null);
+  //     filterProducts({ brand: null });
+  //   }
+  //   // set selected size and filter products
+  //   else {
+  //     setSelectedCategory(id);
+  //     filterProducts({ brand: id });
+  //   }
+  // };
 
   return (
     <div className="shop__sidebar__categories">
@@ -36,12 +36,18 @@ const Categories = ({ filterProducts }) => {
         {categories.map((category) => (
           <li
             key={category.id}
-            className={`category ${
-              category.id === selectedCategory ? "active" : ""
-            }`}
-            onClick={() => filterCategory(category.id)}
+
+            // className={`category ${
+            //   category.id === selectedCategory ? "active" : ""
+            // }`}
           >
-            <a href="#/">{category.name}</a>
+            <p
+              onClick={() =>
+                handleFilters({ name: "category", id: category.id })
+              }
+            >
+              {category.name}
+            </p>
           </li>
         ))}
       </ul>
