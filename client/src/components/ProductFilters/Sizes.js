@@ -1,36 +1,33 @@
 import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getFilters } from "../../features/products/productActions";
+import { setSize } from "../../features/products/productSlice";
 
 const Sizes = ({ handleFilters }) => {
-  const [sizes, setSizes] = useState([]);
+  const dispatch = useDispatch();
+  const { sizeItems } = useSelector((state) => state.products);
 
-  // get sizes from API
-  const getSizes = async () => {
-    const response = await fetch("http://127.0.0.1:8000/api/size/");
-    const data = await response.json();
-    setSizes(data);
-  };
-
-  // get sizes from API
   useEffect(() => {
-    getSizes();
-  }, []);
+    dispatch(getFilters("size"));
+  }, [dispatch]);
 
   return (
     <div className="shop__sidebar__size">
-      {sizes.map((size) => {
-        return (
-          <div
-            key={size.id}
-            onClick={() =>
-              handleFilters({ name: "size", id: size.id, label: size.size })
-            }
-            // className={`size ${size.id === selectedSize ? "active" : ""}`}
-          >
-            <label htmlFor="xs">{size.size}</label>
-            <input type="radio" name="size" id={size.size} />
-          </div>
-        );
-      })}
+      {sizeItems.length > 0 &&
+        sizeItems.map((size) => {
+          return (
+            <div
+              key={size.id}
+              onClick={() =>
+                dispatch(setSize({ id: size.id, name: size.size }))
+              }
+              // className={`size ${size.id === selectedSize ? "active" : ""}`}
+            >
+              <label htmlFor="xs">{size.size}</label>
+              <input type="radio" name="size" id={size.size} />
+            </div>
+          );
+        })}
     </div>
   );
 };

@@ -1,40 +1,39 @@
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { useNavigate, useParams } from "react-router";
+import { useSearchParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 import FilterProducts from "../../components/ProductFilters/FilterProducts";
 import Pagination from "../../components/Pagination";
 import ProductItem from "../../components/ProductItem";
 import Options from "../../components/ProductFilters/Options";
-import { useSearchParams } from "react-router-dom";
+import {
+  getProducts,
+  getFilters,
+  filterProducts,
+} from "../../features/products/productActions";
+import {
+  setFilterOptions,
+  setSearchQuery,
+} from "../../features/products/productSlice";
 
 const Shop = () => {
-  const [products, setProducts] = useState([]);
-  // const [filterOptions, setFilterOptions] = useState({
-  //   category: {
-  //     id: "",
-  //     label: "",
-  //   },
-  //   size: {
-  //     id: "",
-  //     label: "",
-  //   },
-  //   tags: {
-  //     id: "",
-  //     label: "",
-  //   },
-  //   brand: {
-  //     id: "",
-  //     label: "",
-  //   },
-  // });
+  const {
+    productsItems,
+    loading,
+    firstLoad,
+    searchQuery,
+    filterOptions,
+    brandItems,
+    tagItems,
+    sizeItems,
+    categoryItems,
+  } = useSelector((state) => state.products);
 
-  const [filterOptions, setFilterOptions] = useState({
-    category: "",
-    size: "",
-    tags: "",
-    brand: "",
-  });
+  const { tags, brand, size, category } = filterOptions;
+
+  const dispatch = useDispatch();
 
   const [search, setSearch] = useSearchParams();
   const navigate = useNavigate();
@@ -42,10 +41,8 @@ const Shop = () => {
   const getUrl = () => {
     let url = "";
     let searchParams = "";
-    console.log("check params");
     for (const [key, value] of search.entries()) {
       if (value) {
-        console.log(key, value);
         searchParams += `&${key}=${value}`;
       }
     }
@@ -56,51 +53,39 @@ const Shop = () => {
     } else {
       url = "";
     }
-    console.log("get url func");
-    console.log(url);
     return url;
   };
 
-  const handleFilters = async ({ name, id, label, removeFilter }) => {
-    // console.log("name " + name);
-    // console.log("id " + id);
-    // console.log("label " + label);
-    // console.log("removeFilter " + removeFilter);
-    if (removeFilter) {
-      search.delete(name);
-      setSearch(search);
-      const url = getUrl();
-      console.log(url);
-      navigate(`/shop?${url}`);
+  useEffect(() => {
+    navigate(`/shop?${searchQuery}`);
+  }, [searchQuery]);
 
-      setFilterOptions((prev) => ({ ...prev, [name]: "" }));
-    } else {
-      search.set(name, id);
-      const url = getUrl();
-      navigate(`/shop?${url}`);
-      setSearch(search);
-      await getProducts();
-      setFilterOptions({ ...filterOptions, [name]: label });
-    }
-  };
-
-  const getProducts = async () => {
-    const url = getUrl();
-    const res = await fetch(`http://127.0.0.1:8000/api/product/search?${url}`);
-    const data = await res.json();
+  useEffect(() => {
+    console.log("check page load ");
+    let options = {
+      tags: "",
+      brand: "",
+      size: "",
+      category: "",
+    };
     for (const [key, value] of search.entries()) {
       if (value) {
-        setFilterOptions((prev) => ({ ...prev, [key]: value }));
+        options[key] = value;
       }
     }
-    console.log(filterOptions);
-    setProducts(data);
-  };
+    dispatch(setFilterOptions(options));
+  }, [brandItems, categoryItems, tagItems, sizeItems]);
 
-  // initial fetch products
+  // get products on page load
   useEffect(() => {
-    getProducts();
-  }, []);
+    const url = getUrl();
+    dispatch(setSearchQuery(url));
+    if (firstLoad === "true" && url === "") {
+      dispatch(getProducts());
+    } else {
+      dispatch(filterProducts(search));
+    }
+  }, [category, tags, brand, size]);
 
   return (
     <>
@@ -127,7 +112,7 @@ const Shop = () => {
         <div className="container">
           <div className="row">
             <div className="col-lg-3">
-              <FilterProducts handleFilters={handleFilters} />
+              <FilterProducts />
             </div>
             <div className="col-lg-9">
               <div className="shop__product__option">
@@ -139,15 +124,10 @@ const Shop = () => {
                   </div>
                   <div className="col-lg-6 col-md-6 col-sm-6">
                     <div className="filter-options">
-                      {Object.keys(filterOptions).map((key) => {
-                        if (filterOptions[key]) {
+                      {Object.entries(filterOptions).map(([key, value]) => {
+                        if (value?.id) {
                           return (
-                            <Options
-                              key={key}
-                              option={filterOptions[key]}
-                              handleFilters={handleFilters}
-                              setFilterOptions={setFilterOptions}
-                            />
+                            <Options key={key} option={value} name={key} />
                           );
                         }
                       })}
@@ -175,7 +155,7 @@ const Shop = () => {
                 </div>
               </div>
               <div className="row">
-                {products.length === 0 ? (
+                {productsItems.length === 0 ? (
                   <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -186,7 +166,7 @@ const Shop = () => {
                     <h5>No Products Found</h5>
                   </motion.div>
                 ) : (
-                  products.map((product) => {
+                  productsItems.map((product) => {
                     return (
                       <motion.div
                         layout="true"

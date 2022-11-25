@@ -1,55 +1,36 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getFilters,
+  filterProducts,
+} from "../../features/products/productActions";
+import { setCategory } from "../../features/products/productSlice";
 
-const Categories = ({ handleFilters }) => {
-  const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(null);
+const Categories = () => {
+  const dispatch = useDispatch();
+  const { categoryItems } = useSelector((state) => state.products);
 
-  // get categories from api
-  const getCategory = async () => {
-    const response = await fetch("http://127.0.0.1:8000/api/product_category/");
-    const data = await response.json();
-    setCategories(data);
-  };
-
-  // get categories from api
   useEffect(() => {
-    getCategory();
-  }, []);
-
-  // filter products by size
-  // const filterCategory = (id) => {
-  //   // set selected size null if already selected
-  //   if (id === selectedCategory) {
-  //     setSelectedCategory(null);
-  //     filterProducts({ brand: null });
-  //   }
-  //   // set selected size and filter products
-  //   else {
-  //     setSelectedCategory(id);
-  //     filterProducts({ brand: id });
-  //   }
-  // };
+    dispatch(getFilters("product_category"));
+  }, [dispatch]);
 
   return (
     <div className="shop__sidebar__categories">
       <ul className="nice-scroll">
-        {categories.map((category) => (
-          <li
-            key={category.id}
-
-            // className={`category ${
-            //   category.id === selectedCategory ? "active" : ""
-            // }`}
-          >
-            <p
-              onClick={() =>
-                handleFilters({ name: "category", id: category.id })
-              }
+        {categoryItems.length > 0 &&
+          categoryItems.map((category) => (
+            <li
+              key={category.id}
+              onClick={() => {
+                dispatch(setCategory({ id: category.id, name: category.name }));
+              }}
+              // className={`category ${
+              //   category.id === selectedCategory ? "active" : ""
+              // }`}
             >
-              {category.name}
-            </p>
-          </li>
-        ))}
+              <p>{category.name}</p>
+            </li>
+          ))}
       </ul>
     </div>
   );

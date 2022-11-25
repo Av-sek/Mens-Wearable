@@ -5,7 +5,7 @@ import Price from "./Price";
 import Sizes from "./Sizes";
 import Tags from "./Tags";
 
-const FilterProducts = ({ handleFilters }) => {
+const FilterProducts = () => {
   return (
     <div className="shop__sidebar">
       <div className="shop__sidebar__search">
@@ -30,7 +30,7 @@ const FilterProducts = ({ handleFilters }) => {
               data-parent="#accordionExample"
             >
               <div className="card-body">
-                <Categories handleFilters={handleFilters} />
+                <Categories />
               </div>
             </div>
           </div>
@@ -46,7 +46,7 @@ const FilterProducts = ({ handleFilters }) => {
               data-parent="#accordionExample"
             >
               <div className="card-body">
-                <Brands handleFilters={handleFilters} />
+                <Brands />
               </div>
             </div>
           </div>
@@ -62,7 +62,7 @@ const FilterProducts = ({ handleFilters }) => {
               data-parent="#accordionExample"
             >
               <div className="card-body">
-                <Price handleFilters={handleFilters} />
+                <Price />
               </div>
             </div>
           </div>
@@ -78,7 +78,7 @@ const FilterProducts = ({ handleFilters }) => {
               data-parent="#accordionExample"
             >
               <div className="card-body">
-                <Sizes handleFilters={handleFilters} />
+                <Sizes />
               </div>
             </div>
           </div>
@@ -94,7 +94,7 @@ const FilterProducts = ({ handleFilters }) => {
               data-parent="#accordionExample"
             >
               <div className="card-body">
-                <Tags handleFilters={handleFilters} />
+                <Tags />
               </div>
             </div>
           </div>

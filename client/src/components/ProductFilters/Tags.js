@@ -1,29 +1,27 @@
 import { useState, useEffect } from "react";
 
-const Tags = ({ handleFilters }) => {
-  const [tags, setTags] = useState([]);
-  const [selectedTag, setSelectedTag] = useState(null);
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getFilters,
+  filterProducts,
+} from "../../features/products/productActions";
+import { setTags } from "../../features/products/productSlice";
 
-  // get tags from api
-  const getTags = async () => {
-    const response = await fetch("http://127.0.0.1:8000/api/tags/");
-    console.log("check tag response");
-    const data = await response.json();
-    setTags(data);
-  };
+const Tags = () => {
+  const dispatch = useDispatch();
+  const { tagItems } = useSelector((state) => state.products);
 
-  // get tags from api
   useEffect(() => {
-    getTags();
-  }, []);
+    dispatch(getFilters("tags"));
+  }, [dispatch]);
 
   return (
     <div className="shop__sidebar__tags">
-      {tags.length > 0 &&
-        tags.map((tag) => (
+      {tagItems.length > 0 &&
+        tagItems.map((tag) => (
           <div
             key={tag.id}
-            onClick={() => handleFilters({ name: "tags", id: tag.id })}
+            onClick={() => dispatch(setTags({ id: tag.id, name: tag.tag }))}
             // className={`tag ${tag.id === selectedTag ? "active" : ""}`}
             className="tag"
           >

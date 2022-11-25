@@ -7,13 +7,16 @@ import AdminNav from "./Admin/AdminNav";
 const ProtectedRoute = ({ isAllowed, redirectPath = "/", children }) => {
   const [allow, setAllow] = useState(false);
   const verifyAuth = async () => {
-    const res = await fetch("http://127.0.0.1:8000/token/verify", {
+    const res = await fetch("http://127.0.0.1:8000/api/users/token/verify", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
+      body: JSON.stringify({
+        token: localStorage.getItem("accessToken"),
+      }),
     });
+    console.log(res);
     const data = await res.json();
     console.log("verify auth");
     if (data) {
