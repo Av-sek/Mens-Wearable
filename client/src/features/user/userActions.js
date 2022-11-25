@@ -11,6 +11,7 @@ export const login = createAsyncThunk(
       body: JSON.stringify(payload),
     });
     const data = await response.json();
+    console.log(data);
     if (response.ok) {
       localStorage.setItem("accessToken", data.access);
       localStorage.setItem("refreshToken", data.refresh);

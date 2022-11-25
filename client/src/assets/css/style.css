@@ -1239,6 +1239,34 @@ ol {
   display: block;
 }
 
+.shop .filter-options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.shop .option {
+  display: flex;
+  border: 1.5px solid #111111;
+  width: max-content;
+  border-radius: 14px;
+  padding: 1px 8px 1px 12px;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.shop .option span {
+  color: #111111;
+  height: max-content;
+  display: flex;
+  cursor: pointer;
+}
+
+.shop .option p {
+  font-size: 12px;
+  margin-right: 8px;
+}
+
 .shop__sidebar__categories ul,
 .shop__sidebar__price ul,
 .shop__sidebar__brand ul {
@@ -1251,15 +1279,15 @@ ol {
   list-style: none;
 }
 
-.shop__sidebar__brand ul li.active a,
-.shop__sidebar__categories ul li.active a {
+.shop__sidebar__brand ul li.active p,
+.shop__sidebar__categories ul li.active p {
   color: #111111;
   font-weight: 700;
 }
 
-.shop__sidebar__categories ul li a,
+.shop__sidebar__categories ul li p,
 .shop__sidebar__price ul li a,
-.shop__sidebar__brand ul li a {
+.shop__sidebar__brand ul li p {
   color: #b7b7b7;
   font-size: 15px;
   line-height: 32px;
@@ -1268,10 +1296,11 @@ ol {
   transition: all, 0.3s;
 }
 
-.shop__sidebar__categories ul li a:hover,
-.shop__sidebar__price ul li a:hover,
-.shop__sidebar__brand ul li a:hover {
+.shop__sidebar__categories ul li p:hover,
+.shop__sidebar__price ul li p:hover,
+.shop__sidebar__brand ul li p:hover {
   color: #111111;
+  cursor: pointer;
 }
 
 .shop__sidebar__brand ul {
@@ -1391,7 +1420,7 @@ ol {
   padding-top: 15px;
 }
 
-.shop__sidebar__tags a {
+.shop__sidebar__tags .tag {
   color: #404040;
   font-size: 13px;
   font-weight: 700;

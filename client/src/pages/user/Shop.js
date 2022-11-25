@@ -1,67 +1,91 @@
 import { useState, useEffect, useRef } from "react";
+import { motion } from "framer-motion";
+import { useNavigate, useParams } from "react-router";
+import { useSearchParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
 import FilterProducts from "../../components/ProductFilters/FilterProducts";
 import Pagination from "../../components/Pagination";
 import ProductItem from "../../components/ProductItem";
-
-import { motion } from "framer-motion";
+import Options from "../../components/ProductFilters/Options";
+import {
+  getProducts,
+  getFilters,
+  filterProducts,
+} from "../../features/products/productActions";
+import {
+  setFilterOptions,
+  setSearchQuery,
+} from "../../features/products/productSlice";
 
 const Shop = () => {
-  const [products, setProducts] = useState([]);
+  const {
+    productsItems,
+    loading,
+    firstLoad,
+    searchQuery,
+    filterOptions,
+    brandItems,
+    tagItems,
+    sizeItems,
+    categoryItems,
+  } = useSelector((state) => state.products);
 
-  const [filters, setFilters] = useState({
-    brand: null,
-    category: null,
-    tags: null,
-    price: null,
-    size: null,
-  });
+  const { tags, brand, size, category } = filterOptions;
 
-  const fetchProducts = async ({ isFilter }) => {
-    // set valid url for filter or all products
+  const dispatch = useDispatch();
+
+  const [search, setSearch] = useSearchParams();
+  const navigate = useNavigate();
+
+  const getUrl = () => {
     let url = "";
-    if (isFilter) {
-      let searchParams = "";
-      Object.entries(filters).forEach(([key, value]) => {
-        if (value) {
-          searchParams += `&${key}=${value}`;
-        }
-      });
-      url = `http://127.0.0.1:8000/api/product/search?${searchParams}`;
-    } else {
-      url = "http://127.0.0.1:8000/api/product/";
+    let searchParams = "";
+    for (const [key, value] of search.entries()) {
+      if (value) {
+        searchParams += `&${key}=${value}`;
+      }
     }
-    // get products from api
-    const result = await fetch(url, {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-      },
-    });
-    const data = await result.json();
-    setProducts(data);
+    // remove the first & from the search params
+    searchParams = searchParams.substring(1);
+    if (searchParams) {
+      url = `${searchParams}`;
+    } else {
+      url = "";
+    }
+    return url;
   };
 
-  // set filter value and fetch products
-  const filterProducts = async (filterVal) => {
-    console.log(filterVal);
-    setFilters({ ...filters, ...filterVal });
-  };
-
-  // initial fetch products
   useEffect(() => {
-    fetchProducts({ isFilter: false });
-  }, []);
+    navigate(`/shop?${searchQuery}`);
+  }, [searchQuery]);
 
-  // fetch products when filter changes
   useEffect(() => {
-    fetchProducts({ isFilter: true });
-  }, [
-    filters.brand,
-    filters.category,
-    filters.tags,
-    filters.price,
-    filters.size,
-  ]);
+    console.log("check page load ");
+    let options = {
+      tags: "",
+      brand: "",
+      size: "",
+      category: "",
+    };
+    for (const [key, value] of search.entries()) {
+      if (value) {
+        options[key] = value;
+      }
+    }
+    dispatch(setFilterOptions(options));
+  }, [brandItems, categoryItems, tagItems, sizeItems]);
+
+  // get products on page load
+  useEffect(() => {
+    const url = getUrl();
+    dispatch(setSearchQuery(url));
+    if (firstLoad === "true" && url === "") {
+      dispatch(getProducts());
+    } else {
+      dispatch(filterProducts(search));
+    }
+  }, [category, tags, brand, size]);
 
   return (
     <>
@@ -88,7 +112,7 @@ const Shop = () => {
         <div className="container">
           <div className="row">
             <div className="col-lg-3">
-              <FilterProducts filterProducts={filterProducts} />
+              <FilterProducts />
             </div>
             <div className="col-lg-9">
               <div className="shop__product__option">
@@ -98,12 +122,51 @@ const Shop = () => {
                       <p>Showing 1–12 of 126 results</p>
                     </div>
                   </div>
-                  <div className="col-lg-6 col-md-6 col-sm-6"></div>
+                  <div className="col-lg-6 col-md-6 col-sm-6">
+                    <div className="filter-options">
+                      {Object.entries(filterOptions).map(([key, value]) => {
+                        if (value?.id) {
+                          return (
+                            <Options key={key} option={value} name={key} />
+                          );
+                        }
+                      })}
+                      {/* {filterOptions.length > 0 &&
+                        filterOptions.map((option, index) => {
+                          return (
+                            <Options key={index} option={option.label} />
+                            // <div key={option.id} className="filter-option">
+                            //   <span>{option.name}</span>
+                            //   <button
+                            //     onClick={() => {
+                            //       search.delete(option.name);
+                            //       const url = getUrl();
+                            //       navigate(`/shop?${url}`);
+                            //       setSearch(search);
+                            //     }}
+                            //   >
+                            //     x
+                            //   </button>
+                            // </div>
+                          );
+                        })} */}
+                    </div>
+                  </div>
                 </div>
               </div>
               <div className="row">
-                {products.length > 0 &&
-                  products.map((product) => {
+                {productsItems.length === 0 ? (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.1 }}
+                    className="col-lg-4 col-md-6 col-sm-6"
+                  >
+                    <h5>No Products Found</h5>
+                  </motion.div>
+                ) : (
+                  productsItems.map((product) => {
                     return (
                       <motion.div
                         layout="true"
@@ -113,13 +176,14 @@ const Shop = () => {
                         <ProductItem product={product} />
                       </motion.div>
                     );
-                  })}
+                  })
+                )}
               </div>
-              <div className="row">
+              {/* <div className="row">
                 <div className="col-lg-12">
                   <Pagination />
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
