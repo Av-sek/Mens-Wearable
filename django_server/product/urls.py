@@ -12,6 +12,7 @@ router.register('brand', BrandViewSets)
 router.register('image', ImageViewSets)
 router.register('size', SizeViewSets)
 router.register('tags', TagsViewSets)
+router.register('fav', FavouriteViewSets)
 
 
 urlpatterns = [

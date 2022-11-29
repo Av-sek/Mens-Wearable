@@ -15,7 +15,10 @@ class ProductViewSets(viewsets.ModelViewSet):
         authentication.SessionAuthentication,
         JWTAuthentication,
         ]
-    
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({"request": self.request})
+        return context
 
 class CategoryViewSets(viewsets.ModelViewSet):
     queryset = Category.objects.all()
@@ -60,3 +63,19 @@ class TagsViewSets(viewsets.ModelViewSet):
         JWTAuthentication,
         ]
     permission_classes = (IsAdminOrReadOnly,)
+
+
+class FavouriteViewSets(viewsets.ModelViewSet):
+    queryset = Favourite.objects.all()
+    serializer_class = FaviouriteSerializer
+    authentication_classes = [
+        authentication.SessionAuthentication,
+        JWTAuthentication,
+        ]
+    permission_classes = (permissions.IsAuthenticated,)
+    
+    def get_queryset(self):
+        return Favourite.objects.filter(user=self.request.user)
+    
+    def perform_create(self,serializer):
+        serializer.save(user=self.request.user)
