@@ -55,3 +55,12 @@ class Image(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)    
     def __str__(self):
         return self.product.name
+    
+
+#user faviroute prducts
+
+class Favourite(models.Model):
+    user = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name='favourite')
+    product = models.OneToOneField(Product, on_delete=models.CASCADE, related_name='favourite')
+    def __str__(self):
+        return self.product.name
