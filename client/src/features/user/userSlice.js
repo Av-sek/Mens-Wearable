@@ -1,7 +1,7 @@
 // features/user/userSlice.js
 import { createSlice } from "@reduxjs/toolkit";
 
-import { login, register } from "./userActions";
+import { login, register, verify } from "./userActions";
 
 const accessToken = localStorage.getItem("accessToken")
   ? localStorage.getItem("accessToken")
@@ -11,7 +11,7 @@ const refreshToken = localStorage.getItem("refreshToken")
   : null;
 
 const initialState = {
-  loading: false,
+  loading: true,
   userInfo: null,
   accessToken: accessToken,
   error: null,
@@ -60,6 +60,22 @@ const userSlice = createSlice({
     [register.rejected]: (state, action) => {
       console.log(action.payload);
       console.log("rejected");
+    },
+
+    //verify user
+    [verify.pending]: (state, action) => {
+      console.log("verify pending");
+      state.loading = true;
+    },
+    [verify.fulfilled]: (state, action) => {
+      console.log("check verify fulfilled");
+      state.loading = false;
+      state.userInfo = true;
+    },
+    [verify.rejected]: (state, action) => {
+      console.log("check verify rejected");
+      state.loading = false;
+      state.error = true;
     },
   },
 });

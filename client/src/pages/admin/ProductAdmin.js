@@ -1,6 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import { getProducts } from "../../features/products/productActions";
+import AdminProduct from "../../components/Admin/AdminProduct";
 
 const ProductAdmin = () => {
+  const { productsItems } = useSelector((state) => state.products);
+
+  console.log("check render here check render here");
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getProducts());
+  }, [dispatch]);
+
   return (
     <main className="admin-main">
       <div className="content">
@@ -46,48 +60,9 @@ const ProductAdmin = () => {
 
               <div className="card-admin">
                 <div className="row">
-                  <div className="col-12 col-sm-6 col-lg-4 col-xl-3">
-                    <div className="card">
-                      <img
-                        src="https://thumbs.dreamstime.com/b/working-home-laptop-woman-writing-blog-female-hands-keyboard-65929526.jpg"
-                        alt=""
-                      />
-                      <p className="title">Title - Some title</p>
-                      <p>Info - some info</p>
-                      <p>Info - some info</p>
-                      <p>Info - some info</p>
-                      <div className="buttons">
-                        <button>Edit</button>
-                        <button>Delete</button>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-12 col-sm-6 col-lg-4 col-xl-3">
-                    <div className="card">
-                      <img src="img/face-1.png" alt="" />
-                      <p className="title">Title - Some title</p>
-                      <p>Info - some info</p>
-                      <p>Info - some info</p>
-                      <p>Info - some info</p>
-                      <div className="buttons">
-                        <button>Edit</button>
-                        <button>Delete</button>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-12 col-sm-6 col-lg-4 col-xl-3">
-                    <div className="card">
-                      <img src="img/face-1.png" alt="" />
-                      <p className="title">Title - Some title</p>
-                      <p>Info - some info</p>
-                      <p>Info - some info</p>
-                      <p>Info - some info</p>
-                      <div className="buttons">
-                        <button>Edit</button>
-                        <button>Delete</button>
-                      </div>
-                    </div>
-                  </div>
+                  {productsItems.map((product) => (
+                    <AdminProduct key={product.id} product={product} />
+                  ))}
                 </div>
               </div>
             </div>

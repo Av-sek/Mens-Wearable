@@ -83,7 +83,8 @@ function App() {
             element={
               <ProtectedRoute
                 redirectPath="/"
-                isAllowed={!!user && user.role === "admin"}
+                isAllowed={"check is allowed"}
+                // isAllowed={!!user && user.role === "admin"}
               />
             }
           >

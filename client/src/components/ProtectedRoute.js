@@ -1,44 +1,38 @@
 import React, { useEffect, useState } from "react";
 import { Route, Redirect, Navigate, Outlet } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import AdminNav from "./Admin/AdminNav";
+import { verify } from "../features/user/userActions";
 
 const ProtectedRoute = ({ isAllowed, redirectPath = "/", children }) => {
-  const [allow, setAllow] = useState(false);
-  const verifyAuth = async () => {
-    const res = await fetch("http://127.0.0.1:8000/api/users/token/verify", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        token: localStorage.getItem("accessToken"),
-      }),
-    });
-    console.log(res);
-    const data = await res.json();
-    console.log("verify auth");
-    if (data) {
-      setAllow(true);
-    }
-    console.log(data);
-  };
+  console.log("isAllowed ", isAllowed);
+  const { userInfo, loading, error } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    verifyAuth();
-  }, []);
-  if (!allow) {
+    dispatch(verify());
+  }, [dispatch]);
+
+  if (error) {
+    console.log("user not here");
     return <Navigate to={redirectPath} replace />;
   }
-  return children ? (
-    children
-  ) : (
-    <>
-      <AdminNav />
-      <Outlet />
-    </>
-  );
+  if (loading === true) {
+    return <h1 style={{ fontSize: "1000px" }}>Loading...</h1>;
+  }
+  if (loading === false && userInfo) {
+    console.log("user here with loading false");
+    console.log(userInfo, loading, error);
+    return children ? (
+      children
+    ) : (
+      <>
+        <AdminNav />
+        <Outlet />
+      </>
+    );
+  }
 };
 
 export default ProtectedRoute;
