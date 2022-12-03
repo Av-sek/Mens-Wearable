@@ -35,9 +35,19 @@ import BlogUpload from "./pages/admin/BlogUpload";
 import ProductUpload from "./pages/admin/ProductUpload";
 import ProductAdmin from "./pages/admin/ProductAdmin";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Favourites from "./pages/user/Favourites";
 
 function App() {
   const user = useSelector((state) => state.user);
+
+  const AdminOutlet = () => {
+    return (
+      <>
+        <AdminNav />
+        <Outlet />
+      </>
+    );
+  };
 
   const UserOutlet = () => {
     return (
@@ -57,14 +67,18 @@ function App() {
 
         <Route
           path="admin"
-          element={
-            <ProtectedRoute
-              redirectPath="/"
-              isAllowed={!!user && user.role === "admin"}
-            />
-          }
+          // element={<AdminOutlet />}
+          element={<ProtectedRoute />}
         >
           <Route index element={<BlogAdmin />} />
+          {/* <Route
+            path="blog"
+            element={
+              <ProtectedRoute>
+                <BlogAdmin />
+              </ProtectedRoute>
+            }
+          /> */}
           <Route path="blog" element={<BlogAdmin />} />
           <Route path="blog/upload" element={<BlogUpload />} />
           <Route path="product" element={<ProductAdmin />} />
@@ -78,18 +92,19 @@ function App() {
           <Route path="shop" element={<Shop />}>
             <Route path="*" element={<Shop />} />
           </Route>
-          <Route
+          {/* <Route
             path="shop-cart"
             element={
               <ProtectedRoute
                 redirectPath="/"
                 isAllowed={"check is allowed"}
-                // isAllowed={!!user && user.role === "admin"}
+                isAllowed={!!user && user.role === "admin"}
               />
             }
-          >
-            <Route path="" element={<ShoppingCart />} />
-          </Route>
+          > */}
+          <Route path="shop-cart" element={<ShoppingCart />} />
+          <Route path="favourites" element={<Favourites />} />
+          {/* </Route> */}
           <Route path="shop-details" element={<ShopDetails />}>
             <Route path=":id" element={<ShopDetails />} />
           </Route>
