@@ -1,10 +1,11 @@
-from rest_framework import viewsets,permissions
+from rest_framework import viewsets, permissions
 from .permissions import IsAdminOrReadOnly
-from rest_framework_simplejwt.authentication import JWTAuthentication 
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework import authentication
-from .models import *
-from .serializers import *
-
+from .models import Product, Category, Image, Brand, Size, Tags, Favourite
+from .serializers import ProductSerializer, CategorySerializer
+from .serializers import BrandSerializer, SizeSerializer, TagSerializer
+from .serializers import FaviouriteSerializer, ImageSerializer
 
 
 class ProductViewSets(viewsets.ModelViewSet):
@@ -14,11 +15,13 @@ class ProductViewSets(viewsets.ModelViewSet):
     authentication_classes = [
         authentication.SessionAuthentication,
         JWTAuthentication,
-        ]
+    ]
+
     def get_serializer_context(self):
         context = super().get_serializer_context()
         context.update({"request": self.request})
         return context
+
 
 class CategoryViewSets(viewsets.ModelViewSet):
     queryset = Category.objects.all()
@@ -27,24 +30,28 @@ class CategoryViewSets(viewsets.ModelViewSet):
     authentication_classes = [
         authentication.SessionAuthentication,
         JWTAuthentication,
-        ]
-    
+    ]
+
+
 class BrandViewSets(viewsets.ModelViewSet):
     queryset = Brand.objects.all()
     serializer_class = BrandSerializer
     authentication_classes = [
         authentication.SessionAuthentication,
         JWTAuthentication,
-        ]
+    ]
     permission_classes = (IsAdminOrReadOnly,)
+
+
 class ImageViewSets(viewsets.ModelViewSet):
     queryset = Image.objects.all()
     serializer_class = ImageSerializer
     authentication_classes = [
         authentication.SessionAuthentication,
         JWTAuthentication,
-        ]
+    ]
     permission_classes = (IsAdminOrReadOnly,)
+
 
 class SizeViewSets(viewsets.ModelViewSet):
     queryset = Size.objects.all()
@@ -52,8 +59,9 @@ class SizeViewSets(viewsets.ModelViewSet):
     authentication_classes = [
         authentication.SessionAuthentication,
         JWTAuthentication,
-        ]
+    ]
     permission_classes = (IsAdminOrReadOnly,)
+
 
 class TagsViewSets(viewsets.ModelViewSet):
     queryset = Tags.objects.all()
@@ -61,7 +69,7 @@ class TagsViewSets(viewsets.ModelViewSet):
     authentication_classes = [
         authentication.SessionAuthentication,
         JWTAuthentication,
-        ]
+    ]
     permission_classes = (IsAdminOrReadOnly,)
 
 
@@ -71,11 +79,16 @@ class FavouriteViewSets(viewsets.ModelViewSet):
     authentication_classes = [
         authentication.SessionAuthentication,
         JWTAuthentication,
-        ]
+    ]
     permission_classes = (permissions.IsAuthenticated,)
-    
+
     def get_queryset(self):
         return Favourite.objects.filter(user=self.request.user)
-    
-    def perform_create(self,serializer):
+
+    def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({"request": self.request})
+        return context

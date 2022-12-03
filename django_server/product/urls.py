@@ -1,8 +1,10 @@
 
-from rest_framework.routers import DefaultRouter,SimpleRouter
-from django.urls import path 
-from product.viewsets import *
-from .views import *
+from rest_framework.routers import DefaultRouter
+from django.urls import path
+from product.viewsets import ProductViewSets, CategoryViewSets, BrandViewSets
+from product.viewsets import TagsViewSets, FavouriteViewSets, ImageViewSets
+from product.viewsets import SizeViewSets
+from .views import ProductSearchView
 
 router = DefaultRouter()
 
@@ -16,7 +18,7 @@ router.register('fav', FavouriteViewSets)
 
 
 urlpatterns = [
-    path("product/search",ProductSearchView.as_view(), name="search"),
+    path("product/search", ProductSearchView.as_view(), name="search"),
 ]
 
 urlpatterns += router.urls
