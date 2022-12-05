@@ -113,8 +113,10 @@ class ProductSerializer(serializers.ModelSerializer):
         return super().update(instance, validated_data)
 
     def get_is_favourite(self, obj):
-        user = self.context['request'].user
         try:
+            user = self.context['request'].user
+            if not user.id:
+                return False
             return True if obj.favourite.filter(user=user) else False
         except Favourite.DoesNotExist:
             return False
