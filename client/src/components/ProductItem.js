@@ -1,10 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import Stars from "./Stars";
-import { useDispatch, useSelector } from "react-redux";
-import { addCartItems } from "../features/cart/cartActions";
-
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { FaHeart } from "react-icons/fa";
+
+import Stars from "./Stars";
+import { addCartItems } from "../features/cart/cartActions";
+import { addFavorites } from "../features/products/productActions";
 
 const ProductItem = ({ product }) => {
   const dispatch = useDispatch();
@@ -21,8 +23,15 @@ const ProductItem = ({ product }) => {
         <span className="label">New</span>
         <ul className="product__hover">
           <li>
-            <a href="#">
-              <img src={require("../assets/img/icon/heart.png")} alt=""></img>
+            <a
+              onClick={() => {
+                dispatch(addFavorites(product.id));
+              }}
+            >
+              <img
+                src={require("../assets/img/icon/heart-solid.png")}
+                alt=""
+              ></img>
             </a>
           </li>
           <li>

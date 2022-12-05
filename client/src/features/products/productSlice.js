@@ -1,6 +1,12 @@
 // features/user/userSlice.js
 import { createSlice, current } from "@reduxjs/toolkit";
-import { getProducts, filterProducts, getFilters } from "./productActions";
+import {
+  getProducts,
+  filterProducts,
+  getFilters,
+  getFavorites,
+  addFavorites,
+} from "./productActions";
 import { useDispatch } from "react-redux";
 
 const initialState = {
@@ -178,6 +184,28 @@ const productSlice = createSlice({
     },
     [getFilters.rejected]: (state, action) => {
       console.log("getFilters rejected");
+    },
+
+    // get favorite products
+    [getFavorites.pending]: (state, action) => {
+      console.log("get favorite products pending");
+    },
+    [getFavorites.fulfilled]: (state, action) => {
+      console.log("get favorite products fulfilled");
+    },
+    [getFavorites.rejected]: (state, action) => {
+      console.log("get favorite products rejected");
+    },
+
+    // add favorite products
+    [addFavorites.pending]: (state, action) => {
+      console.log("add favorite products pending");
+    },
+    [addFavorites.fulfilled]: (state, action) => {
+      console.log("add favorite products fulfilled");
+    },
+    [addFavorites.rejected]: (state, action) => {
+      console.log("add favorite products rejected");
     },
   },
 });
