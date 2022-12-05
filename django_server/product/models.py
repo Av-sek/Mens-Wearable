@@ -76,5 +76,8 @@ class Favourite(models.Model):
     product = models.ForeignKey(
         Product, on_delete=models.CASCADE, related_name='favourite')
 
+    class Meta:
+        unique_together = ('user', 'product')
+
     def __str__(self):
         return self.product.name
