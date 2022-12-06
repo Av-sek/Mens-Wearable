@@ -19,7 +19,10 @@ class ShoppingCartView(APIView):
         return Response(serializer.data)
 
     def post(self, request):
-        serializer = ShoppingCartSeralizer(data=request.data,)
+        context = {
+            'request': request,
+        }
+        serializer = ShoppingCartSeralizer(data=request.data, context=context)
         if serializer.is_valid():
             serializer.save(user=self.request.user)
             return Response(serializer.data)
