@@ -41,3 +41,27 @@ export const register = createAsyncThunk(
     }
   }
 );
+
+export const verify = createAsyncThunk(
+  "user/verify",
+  async (payload, thunkAPI) => {
+    const response = await fetch(
+      "http://127.0.0.1:8000/api/users/token/verify",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          token: localStorage.getItem("accessToken"),
+        }),
+      }
+    );
+    const data = await response.json();
+    if (response.ok) {
+      return data;
+    } else {
+      return thunkAPI.rejectWithValue(data);
+    }
+  }
+);

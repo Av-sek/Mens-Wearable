@@ -7,6 +7,8 @@ import { logout } from "../features/user/userSlice";
 const Navbar = () => {
   const dispatch = useDispatch();
 
+  console.log("navbar render check");
+
   const { loading, error, userInfo } = useSelector((state) => state.user);
 
   const { totalPrice, cartItems } = useSelector((state) => state.cart);
@@ -50,9 +52,9 @@ const Navbar = () => {
           <a href="#" className="search-switch">
             <img src={require("../assets/img/icon/search.png")} alt=""></img>
           </a>
-          <a href="#">
+          <Link to="/favourites">
             <img src={require("../assets/img/icon/heart.png")} alt=""></img>
-          </a>
+          </Link>
           <a href="#">
             <img src={require("../assets/img/icon/cart.png")} alt=""></img>{" "}
             <span>0</span>

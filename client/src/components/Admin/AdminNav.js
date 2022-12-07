@@ -1,26 +1,37 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { logout } from "../../features/user/userSlice";
 
 const AdminNav = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
 
-  const [position, setPosition] = useState(0);
+  const location = useLocation();
   const [isExpanded, setIsExpanded] = useState(true);
   const activeTab = useRef(null);
   const sidebarRef = useRef(null);
 
-  const activeTabHandler = (e) => {
-    const clickPosition = e.clientY - sidebarRef.current.offsetTop;
-    const index = Math.floor(clickPosition / 58);
+  const tabHandle = (index) => {
     activeTab.current.style.top = `${index * 58 + 2.5}px`;
   };
 
   const toggleShrink = () => {
     setIsExpanded(!isExpanded);
   };
+
+  useEffect(() => {
+    const path = location.pathname.split("admin/")[1];
+    if (path === "blog") {
+      tabHandle(0);
+    } else if (path === "blog/upload") {
+      tabHandle(1);
+    } else if (path === "product") {
+      tabHandle(2);
+    } else {
+      tabHandle(3);
+    }
+  }, [location]);
 
   return (
     <nav className={`admin-nav ${isExpanded ? " " : "shrink"}`}>
@@ -45,11 +56,7 @@ const AdminNav = () => {
         <ul className="main-navigation">
           <div className="active-tab" ref={activeTab}></div>
           <li className="tooltip-element">
-            <Link
-              to="/admin/blog"
-              className="active"
-              onClick={activeTabHandler}
-            >
+            <Link to="/admin/blog" className="active">
               <div className="icon">
                 <i className="bx bx-tachometer"></i>
                 <i className="bx bxs-tachometer"></i>
@@ -58,11 +65,7 @@ const AdminNav = () => {
             </Link>
           </li>
           <li className="tooltip-element">
-            <Link
-              to="/admin/blog/upload"
-              className="active"
-              onClick={activeTabHandler}
-            >
+            <Link to="/admin/blog/upload" className="active">
               <div className="icon">
                 <i className="bx bx-tachometer"></i>
                 <i className="bx bxs-tachometer"></i>
@@ -71,11 +74,7 @@ const AdminNav = () => {
             </Link>
           </li>
           <li className="tooltip-element">
-            <Link
-              to="/admin/product"
-              className="active"
-              onClick={activeTabHandler}
-            >
+            <Link to="/admin/product" className="active">
               <div className="icon">
                 <i className="bx bx-tachometer"></i>
                 <i className="bx bxs-tachometer"></i>
@@ -84,11 +83,7 @@ const AdminNav = () => {
             </Link>
           </li>
           <li className="tooltip-element">
-            <Link
-              to="/admin/product/upload"
-              className="active"
-              onClick={activeTabHandler}
-            >
+            <Link to="/admin/product/upload" className="active">
               <div className="icon">
                 <i className="bx bx-tachometer"></i>
                 <i className="bx bxs-tachometer"></i>

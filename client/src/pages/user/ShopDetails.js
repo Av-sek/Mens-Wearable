@@ -6,37 +6,27 @@ import Stars from "../../components/Stars";
 
 const ShopDetails = () => {
   let params = useParams();
+  console.log("params");
+  console.log(params.id);
 
   const [product, setProduct] = useState(null);
-  const [relatedCategory, setRelatedCategory] = useState(null);
-  const [relatedProducts, setRelatedProducts] = useState([]);
-
-  const getProduct = async () => {
-    const response = await fetch(`https://dummyjson.com/products/${params.id}`);
-    const data = await response.json();
-    setProduct(data);
-    setRelatedCategory(data.category);
-  };
-
-  const getRelatedProducts = async () => {
-    const response = await fetch(
-      `https://dummyjson.com/products?limit=4&skip=20&select=title,price,rating&category=${relatedCategory}`
-    );
-    const data = await response.json();
-    const relatedProductsTemp = data.products;
-    console.log(relatedProductsTemp);
-    setRelatedProducts(relatedProductsTemp);
-  };
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const getProduct = async () => {
+      const response = await fetch(
+        `http://localhost:8000/api/product/${params.id}/`
+      );
+      const data = await response.json();
+      setProduct(data);
+      setLoading(false);
+    };
     getProduct();
   }, []);
 
-  useEffect(() => {
-    getRelatedProducts();
-  }, [relatedCategory]);
-
-  return (
+  return loading ? (
+    <div>Loading...</div>
+  ) : (
     <>
       {/* <!-- Shop Details Section Begin --> */}
       <section className="shop-details">
@@ -148,15 +138,16 @@ const ShopDetails = () => {
             <div className="row d-flex justify-content-center">
               <div className="col-lg-8">
                 <div className="product__details__text">
-                  <h4>{product?.title}</h4>
+                  <h4>{product.name}</h4>
                   <div className="rating">
-                    <Stars rating={product?.rating} />
+                    <Stars rating={Math.floor(product.rating / 20)} />
                     <span> - 5 Reviews</span>
                   </div>
                   <h3>
-                    ${product?.price} <span>70.00</span>
+                    ${product.price}
+                    {/* <span>70.00</span> */}
                   </h3>
-                  <p>{product?.description}</p>
+                  <p>{product.description}</p>
                   <div className="product__details__option">
                     <div className="product__details__option__size">
                       <span>Size:</span>
@@ -208,10 +199,7 @@ const ShopDetails = () => {
                   </div>
                   <div className="product__details__btns__option">
                     <a href="#">
-                      <i className="fa fa-heart"></i> add to wishlist
-                    </a>
-                    <a href="#">
-                      <i className="fa fa-exchange"></i> Add To Compare
+                      <i className="fa fa-heart"></i> add to favourites
                     </a>
                   </div>
                   <div className="product__details__last__option">
@@ -221,13 +209,14 @@ const ShopDetails = () => {
                     <img src="img/shop-details/details-payment.png" alt="" />
                     <ul>
                       <li>
-                        <span>SKU:</span> 3812912
+                        <span>Categories: </span>
+                        {product.category_name}
                       </li>
                       <li>
-                        <span>Categories:</span> {product?.category}
-                      </li>
-                      <li>
-                        <span>Tag:</span> Clothes, Skin, Body
+                        <span>Tag:</span>{" "}
+                        {product.tags.map((tag) => {
+                          return <>{tag.tag} ,</>;
+                        })}
                       </li>
                     </ul>
                   </div>
@@ -434,15 +423,7 @@ const ShopDetails = () => {
               <h3 className="related-title">Related Product</h3>
             </div>
           </div>
-          <div className="row">
-            {relatedProducts.map((product, index) => {
-              return (
-                <div className="col-lg-3 col-md-6 col-sm-6 col-sm-6">
-                  <ProductItem product={product} />
-                </div>
-              );
-            })}
-          </div>
+          <div className="row"></div>
         </div>
       </section>
       {/* <!-- Related Section End --> */}
