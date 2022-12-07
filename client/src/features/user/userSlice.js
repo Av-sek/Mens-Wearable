@@ -12,7 +12,7 @@ const refreshToken = localStorage.getItem("refreshToken")
 
 const initialState = {
   loading: true,
-  userInfo: null,
+  userInfo: false,
   accessToken: accessToken,
   refreshToken: refreshToken,
   isAdmin: false,
@@ -25,7 +25,7 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     logout: (state) => {
-      state.userInfo = null;
+      state.userInfo = false;
       state.accessToken = null;
       localStorage.removeItem("accessToken");
     },
@@ -36,13 +36,7 @@ const userSlice = createSlice({
       console.log("pending");
     },
     [login.fulfilled]: (state, action) => {
-      state.userInfo = {
-        name: "sth",
-        email: "sth@gmail.com",
-        accessToken: action.payload.access,
-        refreshToken: action.payload.refresh,
-        role: "user",
-      };
+      state.userInfo = true;
       state.accessToken = action.payload.access;
       console.log("fulfilled");
     },
@@ -67,12 +61,14 @@ const userSlice = createSlice({
     //verify user
     [verify.pending]: (state, action) => {
       console.log("verify pending");
-      state.loading = true;
+      // state.loading = true;
+      console.log("verify pending 2");
     },
     [verify.fulfilled]: (state, action) => {
       console.log("check verify fulfilled");
-      state.loading = false;
       state.userInfo = true;
+      console.log("check verify here");
+      state.loading = false;
     },
     [verify.rejected]: (state, action) => {
       console.log("check verify rejected");

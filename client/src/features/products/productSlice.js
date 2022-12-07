@@ -135,7 +135,9 @@ const productSlice = createSlice({
       console.log("getProducts pending");
     },
     [getProducts.fulfilled]: (state, action) => {
-      state.productsItems = action.payload;
+      if (!action.payload.detail) {
+        state.productsItems = action.payload;
+      }
       state.firstLoad = "false";
       console.log("getProducts fulfilled");
     },

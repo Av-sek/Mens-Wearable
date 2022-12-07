@@ -95,14 +95,17 @@ function App() {
           <Route path="shop" element={<Shop />}>
             <Route path="*" element={<Shop />} />
           </Route>
-          <Route
+          {/* <Route
             path="shop-cart"
             element={
               <ProtectedRoute>
                 <ShoppingCart />
               </ProtectedRoute>
             }
-          />
+          /> */}
+          <Route element={<ProtectedRoute />}>
+            <Route path="/shop-cart" element={<ShoppingCart />} />
+          </Route>
           {/* <Route path="shop-cart" element={<ShoppingCart />} /> */}
           <Route path="favourites" element={<Favourites />} />
           {/* </Route> */}

@@ -26,15 +26,19 @@ const ProductItem = ({ product }) => {
       setIsFavorite(true);
     }
   };
+
   const removeFavorites = async () => {
-    const response = await fetch(`http://127.0.0.1:8000/api/fav/`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-      body: JSON.stringify({ product: product.id }),
-    });
+    const response = await fetch(
+      `http://127.0.0.1:8000/api/fav/${product.id}/`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+        // body: JSON.stringify({ product: product.id }),
+      }
+    );
     const data = await response.json();
     if (response.ok) {
       console.log("removefavs");

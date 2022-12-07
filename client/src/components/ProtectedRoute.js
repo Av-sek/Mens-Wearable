@@ -8,6 +8,8 @@ import { verify } from "../features/user/userActions";
 
 const ProtectedRoute = ({ children }) => {
   const { userInfo, loading, error } = useSelector((state) => state.user);
+  const { cartItems, totalPrice } = useSelector((state) => state.cart);
+
   const dispatch = useDispatch();
   console.log("check protected route");
 
@@ -16,18 +18,23 @@ const ProtectedRoute = ({ children }) => {
     dispatch(verify());
   }, []);
 
-  if (error) {
+  if (error !== null) {
+    console.log("err check");
     return <Navigate to="/" replace />;
   }
   if (loading === true) {
+    console.log("loading check --1");
+    console.log("loading check --1 " + userInfo);
+
     return <h1 style={{ fontSize: "1000px" }}>Loading...</h1>;
   }
-  if (loading === false && userInfo) {
+  if (userInfo === true) {
+    console.log("userInfo check --1 " + userInfo);
+    console.log("children render check --2");
     return children ? (
       children
     ) : (
       <>
-        {/* <AdminNav /> */}
         <Outlet />
       </>
     );
