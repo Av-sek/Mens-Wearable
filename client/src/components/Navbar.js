@@ -23,10 +23,6 @@ const Navbar = () => {
   //Javascript split method to get the name of the path in array
   const splitLocation = pathname.split("/");
 
-  useEffect(() => {
-    console.log("navbar useEffect");
-  }, [cartItems]);
-
   return (
     <>
       {/* <!-- Offcanvas Menu Begin --> */}
@@ -81,9 +77,9 @@ const Navbar = () => {
               <div className="col-lg-6 col-md-5">
                 <div className="header__top__right">
                   <div className="header__top__links">
-                    {userInfo === null && <Link to="/login">Sign in</Link>}
-                    {userInfo === null && <Link to="/signup">Sign up</Link>}
-                    {userInfo !== null && (
+                    {userInfo === false && <Link to="/login">Sign in</Link>}
+                    {userInfo === false && <Link to="/signup">Sign up</Link>}
+                    {userInfo === true && (
                       <button onClick={() => dispatch(logout())}>Logout</button>
                     )}
                   </div>
@@ -120,6 +116,11 @@ const Navbar = () => {
                   <li className={splitLocation[1] === "shop" ? "active" : ""}>
                     <Link to="/shop">Shop</Link>
                   </li>
+                  <li
+                    className={splitLocation[1] === "shop-cart" ? "active" : ""}
+                  >
+                    <Link to="/shop-cart">Cart</Link>
+                  </li>
                   <li>
                     <a href="#">Pages</a>
                     <ul className="dropdown">
@@ -153,9 +154,9 @@ const Navbar = () => {
                       </li>
                     </ul>
                   </li>
-                  <li className={splitLocation[1] === "blogs" ? "active" : ""}>
+                  {/* <li className={splitLocation[1] === "blogs" ? "active" : ""}>
                     <Link to="/blogs">Blogs</Link>
-                  </li>
+                  </li> */}
                   <li
                     className={splitLocation[1] === "contact" ? "active" : ""}
                   >

@@ -30,7 +30,7 @@ const Login = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  return userInfo !== null ? (
+  return userInfo === true ? (
     <Navigate to="/shop" replace />
   ) : (
     <div className="form-container">
