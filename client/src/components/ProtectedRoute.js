@@ -6,19 +6,18 @@ import jwt_decode from "jwt-decode";
 import AdminNav from "./Admin/AdminNav";
 import { verify } from "../features/user/userActions";
 
-const ProtectedRoute = ({ redirectPath = "/", children }) => {
+const ProtectedRoute = ({ children }) => {
   const { userInfo, loading, error } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-
   console.log("check protected route");
 
   useEffect(() => {
     console.log("check protected route useEffect");
     dispatch(verify());
-  }, [dispatch]);
+  }, []);
 
   if (error) {
-    return <Navigate to={redirectPath} replace />;
+    return <Navigate to="/" replace />;
   }
   if (loading === true) {
     return <h1 style={{ fontSize: "1000px" }}>Loading...</h1>;

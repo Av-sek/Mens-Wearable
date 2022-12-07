@@ -50,6 +50,9 @@ function App() {
   };
 
   const UserOutlet = () => {
+    console.log(" ");
+    console.log("useroutlet");
+    console.log(" ");
     return (
       <>
         <Navbar />
@@ -66,7 +69,7 @@ function App() {
         {/* Admin Routes */}
 
         <Route
-          path="admin"
+          path="/admin"
           // element={<AdminOutlet />}
           element={<ProtectedRoute />}
         >
@@ -92,17 +95,15 @@ function App() {
           <Route path="shop" element={<Shop />}>
             <Route path="*" element={<Shop />} />
           </Route>
-          {/* <Route
+          <Route
             path="shop-cart"
             element={
-              <ProtectedRoute
-                redirectPath="/"
-                isAllowed={"check is allowed"}
-                isAllowed={!!user && user.role === "admin"}
-              />
+              <ProtectedRoute>
+                <ShoppingCart />
+              </ProtectedRoute>
             }
-          > */}
-          <Route path="shop-cart" element={<ShoppingCart />} />
+          />
+          {/* <Route path="shop-cart" element={<ShoppingCart />} /> */}
           <Route path="favourites" element={<Favourites />} />
           {/* </Route> */}
           <Route path="shop-details" element={<ShopDetails />}>

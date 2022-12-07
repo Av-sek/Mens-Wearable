@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,10 +6,41 @@ import { FaHeart } from "react-icons/fa";
 
 import Stars from "./Stars";
 import { addCartItems } from "../features/cart/cartActions";
-import { addFavorites } from "../features/products/productActions";
 
 const ProductItem = ({ product }) => {
+  const [isFavorite, setIsFavorite] = useState(product.is_favourite);
   const dispatch = useDispatch();
+
+  const addFavorites = async () => {
+    const response = await fetch(`http://127.0.0.1:8000/api/fav/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+      body: JSON.stringify({ product: product.id }),
+    });
+    const data = await response.json();
+    if (response.ok) {
+      console.log("addfavs");
+      setIsFavorite(true);
+    }
+  };
+  const removeFavorites = async () => {
+    const response = await fetch(`http://127.0.0.1:8000/api/fav/`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+      body: JSON.stringify({ product: product.id }),
+    });
+    const data = await response.json();
+    if (response.ok) {
+      console.log("removefavs");
+      setIsFavorite(false);
+    }
+  };
 
   const rating = Math.floor(product.rating / 20);
   return (
@@ -25,11 +56,19 @@ const ProductItem = ({ product }) => {
           <li>
             <a
               onClick={() => {
-                dispatch(addFavorites(product.id));
+                if (!isFavorite) {
+                  addFavorites(product.id);
+                } else {
+                  removeFavorites(product.id);
+                }
               }}
             >
               <img
-                src={require("../assets/img/icon/heart-solid.png")}
+                src={
+                  isFavorite
+                    ? require("../assets/img/icon/heart-solid.png")
+                    : require("../assets/img/icon/heart.png")
+                }
                 alt=""
               ></img>
             </a>

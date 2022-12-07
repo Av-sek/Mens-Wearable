@@ -6,6 +6,7 @@ import {
   getFilters,
   getFavorites,
   addFavorites,
+  removeFavorites,
 } from "./productActions";
 import { useDispatch } from "react-redux";
 
@@ -206,6 +207,18 @@ const productSlice = createSlice({
     },
     [addFavorites.rejected]: (state, action) => {
       console.log("add favorite products rejected");
+    },
+
+    // remove favorite products
+
+    [removeFavorites.pending]: (state, action) => {
+      console.log("remove favorite products pending");
+    },
+    [removeFavorites.fulfilled]: (state, action) => {
+      console.log("remove favorite products fulfilled");
+    },
+    [removeFavorites.rejected]: (state, action) => {
+      console.log("remove favorite products rejected");
     },
   },
 });

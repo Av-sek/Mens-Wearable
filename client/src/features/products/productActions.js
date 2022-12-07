@@ -5,7 +5,19 @@ export const getProducts = createAsyncThunk(
   "user/getProducts",
   async (payload, thunkAPI) => {
     console.log("getProducts");
-    const response = await fetch(`http://127.0.0.1:8000/api/product/`);
+    let accessToken = localStorage.getItem("accessToken");
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
+    }
+    const response = await fetch(`http://127.0.0.1:8000/api/product/`, {
+      method: "GET",
+      ...config,
+    });
     console.log(response);
     const data = await response.json();
     console.log(data);
@@ -91,6 +103,27 @@ export const addFavorites = createAsyncThunk(
     console.log("addFavorites id: " + payload);
     const response = await fetch(`http://127.0.0.1:8000/api/fav/`, {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+      body: JSON.stringify({ product: payload }),
+    });
+    const data = await response.json();
+    if (response.ok) {
+      return data;
+    } else {
+      return thunkAPI.rejectWithValue(data);
+    }
+  }
+);
+
+export const removeFavorites = createAsyncThunk(
+  "user/removeFavorites",
+  async (payload, thunkAPI) => {
+    console.log("removeFavorites id: " + payload);
+    const response = await fetch(`http://127.0.0.1:8000/api/fav/`, {
+      method: "DELETE",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
