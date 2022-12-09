@@ -12,7 +12,8 @@ const ProductItem = ({ product }) => {
   const dispatch = useDispatch();
 
   const addFavorites = async () => {
-    const response = await fetch(`http://127.0.0.1:8000/api/fav/`, {
+    console.log("check add favs");
+    const response = await fetch(`http://127.0.0.1:8000/api/fav`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -28,15 +29,15 @@ const ProductItem = ({ product }) => {
   };
 
   const removeFavorites = async () => {
+    console.log("check remove favs");
     const response = await fetch(
-      `http://127.0.0.1:8000/api/fav/${product.id}/`,
+      `http://127.0.0.1:8000/api/fav/${product.id}`,
       {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
-        // body: JSON.stringify({ product: product.id }),
       }
     );
     const data = await response.json();
