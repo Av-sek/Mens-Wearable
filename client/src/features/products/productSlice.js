@@ -135,6 +135,7 @@ const productSlice = createSlice({
       console.log("getProducts pending");
     },
     [getProducts.fulfilled]: (state, action) => {
+      console.log(action.payload);
       if (!action.payload.detail) {
         state.productsItems = action.payload;
       }

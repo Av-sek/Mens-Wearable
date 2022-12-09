@@ -213,10 +213,22 @@ const ShopDetails = () => {
                         {product.category_name}
                       </li>
                       <li>
-                        <span>Tag:</span>{" "}
-                        {product.tags.map((tag) => {
-                          return <>{tag.tag} ,</>;
-                        })}
+                        <span>Tag: </span>{" "}
+                        {product.tags.length === 0 ? (
+                          <React.Fragment>
+                            <span>no tags</span>
+                          </React.Fragment>
+                        ) : (
+                          product.tags.map((tag, index) => {
+                            console.log(index);
+                            return (
+                              <React.Fragment key={tag.id}>
+                                {tag.tag}
+                                {index === product.tags.length - 1 ? "" : ","}
+                              </React.Fragment>
+                            );
+                          })
+                        )}
                       </li>
                     </ul>
                   </div>

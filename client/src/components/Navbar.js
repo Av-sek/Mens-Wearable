@@ -3,6 +3,7 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { logout } from "../features/user/userSlice";
+import { verify } from "../features/user/userActions";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -10,18 +11,16 @@ const Navbar = () => {
   console.log("navbar render check");
 
   const { loading, error, userInfo } = useSelector((state) => state.user);
-
-  const { totalPrice, cartItems } = useSelector((state) => state.cart);
-  //assigning location variable
+  const { totalPrice } = useSelector((state) => state.cart);
+  // get the current location
   const location = useLocation();
-
-  const accesstoken = localStorage.getItem("accesstoken");
-
-  //destructuring pathname from location
   const { pathname } = location;
-
-  //Javascript split method to get the name of the path in array
   const splitLocation = pathname.split("/");
+
+  useEffect(() => {
+    console.log("navbar useEffect check");
+    dispatch(verify());
+  }, []);
 
   return (
     <>
@@ -173,12 +172,12 @@ const Navbar = () => {
                     alt=""
                   ></img>
                 </a>
-                <a href="#">
+                <Link to="/favourites">
                   <img
                     src={require("../assets/img/icon/heart.png")}
                     alt=""
                   ></img>
-                </a>
+                </Link>
                 <Link to="/shop-cart">
                   <img
                     src={require("../assets/img/icon/cart.png")}

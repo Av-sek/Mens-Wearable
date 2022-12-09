@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
+import { verify } from "../../features/user/userActions";
 import { logout } from "../../features/user/userSlice";
 
 const AdminNav = () => {
@@ -28,10 +29,17 @@ const AdminNav = () => {
       tabHandle(1);
     } else if (path === "product") {
       tabHandle(2);
-    } else {
+    } else if (path === "product/upload") {
       tabHandle(3);
+    } else {
+      tabHandle(0);
     }
   }, [location]);
+
+  useEffect(() => {
+    console.log("admin navbar useEffect check");
+    dispatch(verify());
+  }, []);
 
   return (
     <nav className={`admin-nav ${isExpanded ? " " : "shrink"}`}>

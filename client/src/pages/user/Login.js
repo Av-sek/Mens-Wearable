@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { FaLock, FaIdCard } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { Link, Navigate } from "react-router-dom";
@@ -7,27 +7,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../features/user/userActions";
 
 const Login = () => {
-  const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-  });
-
-  const dispatch = useDispatch();
-
   const { loading, error, userInfo } = useSelector((state) => state.user);
 
+  const username = useRef();
+  const password = useRef();
+
+  const dispatch = useDispatch();
   console.log(userInfo);
 
   const signInHandler = (e) => {
     e.preventDefault();
-    // let formVal = new FormData();
-    // formVal.append("email", formData.email);
-    // formVal.append("password", formData.password);
-    dispatch(login(formData));
-  };
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    dispatch(
+      login({
+        username: username.current?.value,
+        password: password.current?.value,
+      })
+    );
   };
 
   return userInfo === true ? (
@@ -49,7 +44,7 @@ const Login = () => {
             className="form-control"
             id="email"
             required
-            onChange={handleChange}
+            ref={username}
             placeholder="Enter your email"
           />
           <MdEmail className="form-icon" />
@@ -62,7 +57,7 @@ const Login = () => {
             required
             className="form-control"
             id="password"
-            onChange={handleChange}
+            ref={password}
             placeholder="Enter your password"
           />
           <FaLock className="form-icon" />
