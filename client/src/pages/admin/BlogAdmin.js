@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 // import styles from "../assets/css/adminpanel.css";
 
 const BlogAdmin = () => {
-  // const user = useSelector((state) => state.user);
   console.log("blog admin check");
   return (
     <main className="admin-main">

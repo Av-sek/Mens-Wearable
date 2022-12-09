@@ -1,8 +1,13 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
 const ProductUpload = () => {
+  const productName = useRef();
+  const productPrice = useRef();
+  const productSize = useRef();
+  const productCategory = useRef();
+
   const [description, setDescription] = useState("");
 
   const [colors, setColors] = useState([]);
@@ -80,11 +85,12 @@ const ProductUpload = () => {
     setImageUrls(newImages);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = () => {
     const product = {
-      name: e.target.name.value,
-      price: e.target.price.value,
+      name: productName.current?.value,
+      price: productPrice.current?.value,
+      size: productSize.current?.value,
+      category: productCategory.current?.value,
       description: description,
       colors: colors,
       tags: tags,
@@ -104,22 +110,42 @@ const ProductUpload = () => {
         </div>
         <div className="col-12">
           <div className="form-element">
-            <form action="#/">
+            <form>
               <div className="form-group">
                 <label htmlFor="input-1">Name </label>
-                <input type="text" id="input-1" className="form-control" />
+                <input
+                  type="text"
+                  id="input-1"
+                  className="form-control"
+                  ref={productName}
+                />
               </div>
               <div className="form-group">
                 <label htmlFor="input-1">Price </label>
-                <input type="number" id="input-1" className="form-control" />
+                <input
+                  type="number"
+                  id="input-1"
+                  className="form-control"
+                  ref={productPrice}
+                />
               </div>
               <div className="form-group">
                 <label htmlFor="input-1">Size </label>
-                <input type="text" id="input-1" className="form-control" />
+                <input
+                  type="text"
+                  id="input-1"
+                  className="form-control"
+                  ref={productSize}
+                />
               </div>
               <div className="form-group">
                 <label htmlFor="input-1">Category </label>
-                <input type="text" id="input-1" className="form-control" />
+                <input
+                  type="text"
+                  id="input-1"
+                  className="form-control"
+                  ref={productCategory}
+                />
               </div>
               <div className="form-group tag-group">
                 <label htmlFor="input-1">Tags </label>
@@ -212,7 +238,7 @@ const ProductUpload = () => {
                   modules={modules}
                 />
               </div>
-              <button type="submit">Submit</button>
+              <button onClick={() => handleSubmit()}>Submit</button>
             </form>
           </div>
         </div>
