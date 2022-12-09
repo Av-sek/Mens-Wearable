@@ -35,6 +35,7 @@ import BlogUpload from "./pages/admin/BlogUpload";
 import ProductUpload from "./pages/admin/ProductUpload";
 import ProductAdmin from "./pages/admin/ProductAdmin";
 import ProtectedRoute from "./components/ProtectedRoute";
+import ProtectedRouteAdmin from "./components/ProtectedRouteAdmin";
 import Favourites from "./pages/user/Favourites";
 
 function App() {
@@ -50,9 +51,6 @@ function App() {
   };
 
   const UserOutlet = () => {
-    console.log(" ");
-    console.log("useroutlet");
-    console.log(" ");
     return (
       <>
         <Navbar />
@@ -70,22 +68,24 @@ function App() {
 
         <Route
           path="/admin"
-          // element={<AdminOutlet />}
-          element={<ProtectedRoute />}
+          element={<AdminOutlet />}
+          // element={<ProtectedRoute />}
         >
-          <Route index element={<BlogAdmin />} />
-          {/* <Route
-            path="blog"
-            element={
-              <ProtectedRoute>
-                <BlogAdmin />
-              </ProtectedRoute>
-            }
-          /> */}
-          <Route path="blog" element={<BlogAdmin />} />
-          <Route path="blog/upload" element={<BlogUpload />} />
-          <Route path="product" element={<ProductAdmin />} />
-          <Route path="product/upload" element={<ProductUpload />} />
+          <Route element={<ProtectedRouteAdmin />}>
+            <Route index element={<BlogAdmin />} />
+          </Route>
+          <Route element={<ProtectedRouteAdmin />}>
+            <Route path="blog" element={<BlogAdmin />} />
+          </Route>
+          <Route element={<ProtectedRouteAdmin />}>
+            <Route path="blog/upload" element={<BlogUpload />} />
+          </Route>
+          <Route element={<ProtectedRouteAdmin />}>
+            <Route path="product" element={<ProductAdmin />} />
+          </Route>
+          <Route element={<ProtectedRouteAdmin />}>
+            <Route path="product/upload" element={<ProductUpload />} />
+          </Route>
         </Route>
 
         {/* User Routes */}

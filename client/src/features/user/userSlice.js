@@ -9,14 +9,14 @@ const accessToken = localStorage.getItem("accessToken")
 const refreshToken = localStorage.getItem("refreshToken")
   ? localStorage.getItem("refreshToken")
   : null;
+const role = localStorage.getItem("role") ? localStorage.getItem("role") : null;
 
 const initialState = {
   loading: true,
   userInfo: false,
   accessToken: accessToken,
   refreshToken: refreshToken,
-  isAdmin: false,
-  role: "admin",
+  role: role,
   error: null,
 };
 
@@ -27,7 +27,11 @@ const userSlice = createSlice({
     logout: (state) => {
       state.userInfo = false;
       state.accessToken = null;
+      state.refreshToken = null;
+      state.role = "user";
       localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+      localStorage.removeItem("role");
     },
   },
   extraReducers: {
@@ -38,6 +42,8 @@ const userSlice = createSlice({
     [login.fulfilled]: (state, action) => {
       state.userInfo = true;
       state.accessToken = action.payload.access;
+      state.refreshToken = action.payload.refresh;
+      state.role = action.payload.is_staff ? "admin" : "user";
       console.log("fulfilled");
     },
     [login.rejected]: (state, action) => {

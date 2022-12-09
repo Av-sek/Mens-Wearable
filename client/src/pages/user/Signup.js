@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { FaUserAlt, FaLock, FaIdCard } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
@@ -6,26 +6,23 @@ import { useDispatch, useSelector } from "react-redux";
 import { register } from "../../features/user/userActions";
 
 const Signup = () => {
+  const { loading, error, userInfo } = useSelector((state) => state.user);
+  const username = useRef();
+  const password = useRef();
+
   const dispatch = useDispatch();
 
-  const [formData, setFormData] = useState({
-    username: "",
-    // email: "",
-    password: "",
-  });
-
-  const { loading, error, userInfo } = useSelector((state) => state.user);
-
-  const signUp = async (e) => {
+  const signUp = (e) => {
     e.preventDefault();
-    dispatch(register(formData));
+    dispatch(
+      register({
+        username: username.current?.value,
+        password: password.current?.value,
+      })
+    );
   };
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  return userInfo !== null ? (
+  return userInfo === true ? (
     <Navigate to="/shop" replace />
   ) : (
     <div className="form-container">
@@ -44,7 +41,7 @@ const Signup = () => {
             className="form-control"
             id="username"
             required
-            onChange={handleChange}
+            ref={username}
             placeholder="Enter your name"
           />
           <FaUserAlt className="form-icon" />
@@ -70,7 +67,7 @@ const Signup = () => {
             required
             className="form-control"
             id="password"
-            onChange={handleChange}
+            ref={password}
             placeholder="Enter your password"
           />
           <FaLock className="form-icon" />
