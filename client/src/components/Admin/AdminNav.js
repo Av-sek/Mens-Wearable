@@ -23,14 +23,10 @@ const AdminNav = () => {
 
   useEffect(() => {
     const path = location.pathname.split("admin/")[1];
-    if (path === "blog") {
+    if (path === "product") {
       tabHandle(0);
-    } else if (path === "blog/upload") {
-      tabHandle(1);
-    } else if (path === "product") {
-      tabHandle(2);
     } else if (path === "product/upload") {
-      tabHandle(3);
+      tabHandle(1);
     } else {
       tabHandle(0);
     }
@@ -63,24 +59,6 @@ const AdminNav = () => {
       <div className="sidebar-links" ref={sidebarRef}>
         <ul className="main-navigation">
           <div className="active-tab" ref={activeTab}></div>
-          <li className="tooltip-element">
-            <Link to="/admin/blog" className="active">
-              <div className="icon">
-                <i className="bx bx-tachometer"></i>
-                <i className="bx bxs-tachometer"></i>
-              </div>
-              <span className="link hide">Blogs</span>
-            </Link>
-          </li>
-          <li className="tooltip-element">
-            <Link to="/admin/blog/upload" className="active">
-              <div className="icon">
-                <i className="bx bx-tachometer"></i>
-                <i className="bx bxs-tachometer"></i>
-              </div>
-              <span className="link hide">Add Blogs</span>
-            </Link>
-          </li>
           <li className="tooltip-element">
             <Link to="/admin/product" className="active">
               <div className="icon">

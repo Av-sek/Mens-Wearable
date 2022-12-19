@@ -115,11 +115,16 @@ const Navbar = () => {
                   <li className={splitLocation[1] === "shop" ? "active" : ""}>
                     <Link to="/shop">Shop</Link>
                   </li>
-                  <li
-                    className={splitLocation[1] === "shop-cart" ? "active" : ""}
-                  >
-                    <Link to="/shop-cart">Cart</Link>
-                  </li>
+                  {userInfo === true && (
+                    <li
+                      className={
+                        splitLocation[1] === "shop-cart" ? "active" : ""
+                      }
+                    >
+                      <Link to="/shop-cart">Cart</Link>
+                    </li>
+                  )}
+
                   <li>
                     <a href="#">Pages</a>
                     <ul className="dropdown">

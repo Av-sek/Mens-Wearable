@@ -7,6 +7,8 @@ const ProductUpload = () => {
   const productPrice = useRef();
   const productSize = useRef();
   const productCategory = useRef();
+  const prodcutOverview = useRef();
+  const productSale = useRef();
 
   const [description, setDescription] = useState("");
 
@@ -41,15 +43,6 @@ const ProductUpload = () => {
     ],
   };
 
-  const addColor = (e) => {
-    e.preventDefault();
-    const hasColor = colors.find((color) => color === currentColor);
-    if (hasColor) {
-      return;
-    }
-    setColors([...colors, currentColor]);
-  };
-
   const addTag = (tag) => {
     setTag(tag);
     const newTag = tag.slice(-1);
@@ -70,11 +63,6 @@ const ProductUpload = () => {
     setImageUrls([...imageUrls, fileUrl]);
   };
 
-  const removeColor = (color) => {
-    const newColors = colors.filter((c) => c !== color);
-    setColors(newColors);
-  };
-
   const removeTag = (tag) => {
     const newTags = tags.filter((t) => t !== tag);
     setTags(newTags);
@@ -85,14 +73,16 @@ const ProductUpload = () => {
     setImageUrls(newImages);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     const product = {
       name: productName.current?.value,
       price: productPrice.current?.value,
       size: productSize.current?.value,
       category: productCategory.current?.value,
+      overview: prodcutOverview.current?.value,
+      on_sale: productSale.current?.value,
       description: description,
-      colors: colors,
       tags: tags,
       images: imageUrls,
     };
@@ -138,6 +128,12 @@ const ProductUpload = () => {
                   ref={productSize}
                 />
               </div>
+              <div className="form-group my-2">
+                <label htmlFor="input-1" className="mr-3">
+                  On sale{" "}
+                </label>
+                <input type="checkbox" id="input-1" ref={productSale} />
+              </div>
               <div className="form-group">
                 <label htmlFor="input-1">Category </label>
                 <input
@@ -172,37 +168,6 @@ const ProductUpload = () => {
                     ))}
                 </div>
               </div>
-              <div className="form-group color-group">
-                <label htmlFor="input-1">Color </label>
-                <div className="d-flex">
-                  <input
-                    type="color"
-                    id="input-1"
-                    className="form-control"
-                    onChange={(e) => {
-                      setCurrentColor(e.target.value);
-                    }}
-                  />
-                  <button className="add-item my-0 ml-3" onClick={addColor}>
-                    <i className="fas fa-plus"></i>
-                  </button>
-                </div>
-                <div className="colors">
-                  {colors.length > 0 &&
-                    colors.map((color, index) => (
-                      <div
-                        className="color"
-                        style={{ backgroundColor: color }}
-                        key={index}
-                      >
-                        <i
-                          className="fas fa-times"
-                          onClick={() => removeColor(color)}
-                        ></i>
-                      </div>
-                    ))}
-                </div>
-              </div>
               <div className="form-group">
                 <label htmlFor="input-1">Product Images </label>
                 <div className="d-flex">
@@ -229,6 +194,14 @@ const ProductUpload = () => {
                     ))}
                 </div>
               </div>
+              <div className="form-group">
+                <label htmlFor="input-1">Overview </label>
+                <textarea
+                  id="input-1"
+                  className="form-control"
+                  ref={prodcutOverview}
+                />
+              </div>
               <div className="col-12 editor-column mb-3 px-0">
                 <label>Product Description</label>
                 <ReactQuill
@@ -238,7 +211,7 @@ const ProductUpload = () => {
                   modules={modules}
                 />
               </div>
-              <button onClick={() => handleSubmit()}>Submit</button>
+              <button onClick={(e) => handleSubmit(e)}>Submit</button>
             </form>
           </div>
         </div>

@@ -16,6 +16,8 @@ const ProtectedRoute = ({ children }) => {
   }, []);
 
   if (error !== null) {
+    console.log("err check");
+    console.log(error);
     return <Navigate to="/" replace />;
   }
   if (loading === true) {

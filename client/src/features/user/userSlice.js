@@ -73,6 +73,7 @@ const userSlice = createSlice({
     [verify.fulfilled]: (state, action) => {
       console.log("check verify fulfilled");
       state.userInfo = true;
+      state.error = null;
       console.log("check verify here");
       state.loading = false;
     },
