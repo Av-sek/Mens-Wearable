@@ -88,7 +88,7 @@ const ProductUpload = () => {
       description: description,
       price: productPrice.current?.value,
       rating: productRating.current?.value,
-      on_sale: productSale.current?.value,
+      on_sale: productSale.current?.checked,
       category: productCategory.current?.value,
       brand: productBrand.current?.value,
       size: productSize.current?.value,

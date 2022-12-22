@@ -21,6 +21,9 @@ const ProtectedRouteAdmin = ({ children }) => {
   console.log("loading " + loading);
   console.log("error " + error);
 
+  if (userInfo === false && role === "user") {
+    return <Navigate to="/" replace />;
+  }
   if (error !== null) {
     return <Navigate to="/" replace />;
   }
@@ -28,7 +31,14 @@ const ProtectedRouteAdmin = ({ children }) => {
     return <Navigate to="/" replace />;
   }
   if (loading === true) {
-    return <h1 style={{ fontSize: "1000px" }}>Loading...</h1>;
+    return (
+      <div class="wrap">
+        <div class="loading">
+          <div class="bounceball"></div>
+          <div class="text">NOW LOADING</div>
+        </div>
+      </div>
+    );
   }
   if (userInfo === true && role === "admin") {
     return (
