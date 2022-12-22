@@ -14,8 +14,11 @@ class ShoppingCartView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
+        context = {
+            'request': request
+        }
         cart = ShoppingCart.objects.filter(user=self.request.user)
-        serializer = ShoppingCartSeralizer(cart, many=True)
+        serializer = ShoppingCartSeralizer(cart, many=True, context=context)
         return Response(serializer.data)
 
     def post(self, request):
