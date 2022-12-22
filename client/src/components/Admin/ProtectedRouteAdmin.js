@@ -3,8 +3,8 @@ import { Route, Redirect, Navigate, Outlet } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import jwt_decode from "jwt-decode";
 
-import AdminNav from "./Admin/AdminNav";
-import { verify } from "../features/user/userActions";
+import AdminNav from "./AdminNav";
+import { verify } from "../../features/user/userActions";
 
 const ProtectedRouteAdmin = ({ children }) => {
   const dispatch = useDispatch();
@@ -31,10 +31,9 @@ const ProtectedRouteAdmin = ({ children }) => {
     return <h1 style={{ fontSize: "1000px" }}>Loading...</h1>;
   }
   if (userInfo === true && role === "admin") {
-    return children ? (
-      children
-    ) : (
+    return (
       <>
+        <AdminNav />
         <Outlet />
       </>
     );

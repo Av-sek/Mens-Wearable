@@ -23,6 +23,30 @@ export const getProducts = createAsyncThunk(
   }
 );
 
+export const addProducts = createAsyncThunk(
+  "user/addProducts",
+  async (payload, thunkAPI) => {
+    console.log("addProducts");
+    console.log(payload);
+    let accessToken = localStorage.getItem("accessToken");
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
+    }
+    const response = await fetch(`http://127.0.0.1:8000/api/product/`, {
+      method: "POST",
+      ...config,
+      body: JSON.stringify(payload),
+    });
+    const data = await response.json();
+    return data;
+  }
+);
+
 export const getFilters = createAsyncThunk(
   "user/getFilters",
   async (payload, thunkAPI) => {

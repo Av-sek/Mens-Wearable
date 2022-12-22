@@ -957,6 +957,14 @@ ol {
   color: #b7b7b7;
 }
 
+.product__item .product__item__text a:hover {
+  color: #e53637;
+}
+
+.product__item .product__item__text a:not([href]) {
+  color: #e53637;
+}
+
 .product__item:hover .product__item__pic .product__hover {
   right: 20px;
   opacity: 1;

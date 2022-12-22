@@ -88,11 +88,7 @@ const ProductItem = ({ product }) => {
       </div>
       <div className="product__item__text">
         <h6>{product.name}</h6>
-        <a
-          href="#/"
-          className="add-cart"
-          onClick={() => dispatch(addCartItems(product))}
-        >
+        <a className="add-cart" onClick={() => dispatch(addCartItems(product))}>
           + Add To Cart
         </a>
         <div className="rating">

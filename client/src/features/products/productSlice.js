@@ -2,6 +2,7 @@
 import { createSlice, current } from "@reduxjs/toolkit";
 import {
   getProducts,
+  addProducts,
   filterProducts,
   getFilters,
   getFavorites,
@@ -144,6 +145,19 @@ const productSlice = createSlice({
     },
     [getProducts.rejected]: (state, action) => {
       console.log("getProducts rejected");
+    },
+
+    // add products
+
+    // getProducts
+    [addProducts.pending]: (state, action) => {
+      console.log("addProducts pending");
+    },
+    [addProducts.fulfilled]: (state, action) => {
+      console.log("addProducts fulfilled");
+    },
+    [addProducts.rejected]: (state, action) => {
+      console.log("addProducts rejected");
     },
 
     // filterProducts

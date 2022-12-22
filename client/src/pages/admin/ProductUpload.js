@@ -1,14 +1,21 @@
 import { useRef, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { addProducts } from "../../features/products/productActions";
+import { useDispatch } from "react-redux";
 
 const ProductUpload = () => {
+  const dispatch = useDispatch();
+
   const productName = useRef();
   const productPrice = useRef();
   const productSize = useRef();
   const productCategory = useRef();
   const prodcutOverview = useRef();
   const productSale = useRef();
+  const productRating = useRef();
+  const productBrand = useRef();
+  const productThumbnail = useRef();
 
   const [description, setDescription] = useState("");
 
@@ -77,16 +84,21 @@ const ProductUpload = () => {
     e.preventDefault();
     const product = {
       name: productName.current?.value,
-      price: productPrice.current?.value,
-      size: productSize.current?.value,
-      category: productCategory.current?.value,
       overview: prodcutOverview.current?.value,
-      on_sale: productSale.current?.value,
       description: description,
-      tags: tags,
-      images: imageUrls,
+      price: productPrice.current?.value,
+      rating: productRating.current?.value,
+      on_sale: productSale.current?.value,
+      category: productCategory.current?.value,
+      brand: productBrand.current?.value,
+      size: productSize.current?.value,
+      color: "#fff",
+      tags_list: tags,
+      thumbnail: productThumbnail.current?.files[0],
+      // images: imageUrls,
     };
     console.log(product);
+    dispatch(addProducts(product));
   };
 
   return (
@@ -120,12 +132,30 @@ const ProductUpload = () => {
                 />
               </div>
               <div className="form-group">
+                <label htmlFor="input-1">Rating </label>
+                <input
+                  type="number"
+                  id="input-1"
+                  className="form-control"
+                  ref={productRating}
+                />
+              </div>
+              <div className="form-group">
                 <label htmlFor="input-1">Size </label>
                 <input
                   type="text"
                   id="input-1"
                   className="form-control"
                   ref={productSize}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="input-1">Brand </label>
+                <input
+                  type="text"
+                  id="input-1"
+                  className="form-control"
+                  ref={productBrand}
                 />
               </div>
               <div className="form-group my-2">
@@ -167,6 +197,15 @@ const ProductUpload = () => {
                       </span>
                     ))}
                 </div>
+              </div>
+              <div className="form-group">
+                <label htmlFor="input-1">Image </label>
+                <input
+                  type="file"
+                  id="input-1"
+                  className="form-control"
+                  ref={productThumbnail}
+                />
               </div>
               <div className="form-group">
                 <label htmlFor="input-1">Product Images </label>

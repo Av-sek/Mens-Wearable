@@ -35,7 +35,7 @@ import BlogUpload from "./pages/admin/BlogUpload";
 import ProductUpload from "./pages/admin/ProductUpload";
 import ProductAdmin from "./pages/admin/ProductAdmin";
 import ProtectedRoute from "./components/ProtectedRoute";
-import ProtectedRouteAdmin from "./components/ProtectedRouteAdmin";
+import ProtectedRouteAdmin from "./components/Admin/ProtectedRouteAdmin";
 import Favourites from "./pages/user/Favourites";
 
 function App() {
@@ -68,24 +68,24 @@ function App() {
 
         <Route
           path="/admin"
-          element={<AdminOutlet />}
+          element={<ProtectedRouteAdmin />}
           // element={<ProtectedRoute />}
         >
-          <Route element={<ProtectedRouteAdmin />}>
-            <Route index element={<BlogAdmin />} />
-          </Route>
-          <Route element={<ProtectedRouteAdmin />}>
-            <Route path="blog" element={<BlogAdmin />} />
-          </Route>
-          <Route element={<ProtectedRouteAdmin />}>
-            <Route path="blog/upload" element={<BlogUpload />} />
-          </Route>
-          <Route element={<ProtectedRouteAdmin />}>
-            <Route path="product" element={<ProductAdmin />} />
-          </Route>
-          <Route element={<ProtectedRouteAdmin />}>
-            <Route path="product/upload" element={<ProductUpload />} />
-          </Route>
+          {/* <Route element={<ProtectedRouteAdmin />}> */}
+          <Route index element={<BlogAdmin />} />
+          {/* </Route> */}
+          {/* <Route element={<ProtectedRouteAdmin />}> */}
+          <Route path="blog" element={<BlogAdmin />} />
+          {/* </Route> */}
+          {/* <Route element={<ProtectedRouteAdmin />}> */}
+          <Route path="blog/upload" element={<BlogUpload />} />
+          {/* </Route> */}
+          {/* <Route element={<ProtectedRouteAdmin />}> */}
+          <Route path="product" element={<ProductAdmin />} />
+          {/* </Route> */}
+          {/* <Route element={<ProtectedRouteAdmin />}> */}
+          <Route path="product/upload" element={<ProductUpload />} />
+          {/* </Route> */}
         </Route>
 
         {/* User Routes */}
@@ -95,14 +95,6 @@ function App() {
           <Route path="shop" element={<Shop />}>
             <Route path="*" element={<Shop />} />
           </Route>
-          {/* <Route
-            path="shop-cart"
-            element={
-              <ProtectedRoute>
-                <ShoppingCart />
-              </ProtectedRoute>
-            }
-          /> */}
           <Route element={<ProtectedRoute />}>
             <Route path="/shop-cart" element={<ShoppingCart />} />
           </Route>
