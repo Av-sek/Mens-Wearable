@@ -85,12 +85,12 @@ class ProductSerializer(serializers.ModelSerializer):
         if validated_data.get('tags_list'):
             tags = validated_data.pop('tags_list')
             tags = tags.split(',')
-            print(tags)
-        new_product = Product.objects.create(**validated_data)
+        uploaded_data = []
         if validated_data.get('images'):
             uploaded_data = validated_data.pop('images')
-            for uploaded_item in uploaded_data:
-                Image.objects.create(product=new_product, image=uploaded_item)
+        new_product = Product.objects.create(**validated_data)
+        for uploaded_item in uploaded_data:
+            Image.objects.create(product=new_product, image=uploaded_item)
         for tag in tags:
             tag_obj = Tags.objects.get_or_create(tag=tag)
             new_product.tags.add(tag_obj[0])

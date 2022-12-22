@@ -2,3 +2,4 @@ venv
 *.pyc
 */media/*
 *.sqlite3
+.vscode/settings.json
