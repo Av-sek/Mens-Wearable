@@ -37,6 +37,7 @@ export const addProducts = createAsyncThunk(
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
     }
+    console.log(config);
     const response = await fetch(`http://127.0.0.1:8000/api/product/`, {
       method: "POST",
       ...config,

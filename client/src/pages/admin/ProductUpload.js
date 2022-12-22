@@ -16,6 +16,7 @@ const ProductUpload = () => {
   const productRating = useRef();
   const productBrand = useRef();
   const productThumbnail = useRef();
+  const productTags = useRef();
 
   const [description, setDescription] = useState("");
 
@@ -93,7 +94,7 @@ const ProductUpload = () => {
       brand: productBrand.current?.value,
       size: productSize.current?.value,
       color: "#fff",
-      tags_list: tags,
+      tags_list: productTags.current?.value,
       thumbnail: productThumbnail.current?.files[0],
       // images: imageUrls,
     };
@@ -171,6 +172,15 @@ const ProductUpload = () => {
                   id="input-1"
                   className="form-control"
                   ref={productCategory}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="input-1">Tag here </label>
+                <input
+                  type="text"
+                  id="input-1"
+                  className="form-control"
+                  ref={productTags}
                 />
               </div>
               <div className="form-group tag-group">
