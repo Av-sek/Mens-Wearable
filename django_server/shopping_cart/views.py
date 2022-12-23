@@ -44,7 +44,11 @@ class ShoppingCartRetrieveDestroyView(APIView):
         request.POST._mutable = True
         request.data['product'] = cart.product.id
         request.POST._mutable = False
-        serializer = ShoppingCartSeralizer(cart, data=request.data,)
+        context = {
+            'request': request
+        }
+        serializer = ShoppingCartSeralizer(
+            cart, data=request.data, context=context)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
